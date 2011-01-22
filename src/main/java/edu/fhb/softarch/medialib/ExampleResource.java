@@ -28,34 +28,31 @@ import javax.ws.rs.core.Response.Status;
 @Produces("application/xml")
 public class ExampleResource {
 
-	private static Map<Integer, Meldung> Meldungen = new HashMap<Integer, Meldung>();
-
-	static {
-		Meldungen.put(1, new Meldung(1, "foo"));
-		Meldungen.put(2, new Meldung(2, "bar"));
-		Meldungen.put(3, new Meldung(3, "baz"));
-	}
-
 	public ExampleResource() {
 	}
 
-	// @GET
-	// @Path("/Meldungs")
-	// @Override
-	// public MeldungCollection getMeldungs() {
-	// return new MeldungCollection(Meldungen.values());
-	// }
-
 	@GET
-	@Path("/Meldung/{id}")
-	public Meldung getMeldung(@PathParam("id") Integer id) {
-		return Meldungen.get(id);
+	@Path("/Earthparts")
+	public EarthPartCollection getAllEarthparts() {
+		return new EarthPartCollection(EarthpartDao.all());
 	}
 
 	@GET
-	@Path("/Meldungs/bad")
-	public Response getBadRequest() {
-		return Response.status(Status.BAD_REQUEST).build();
+	@Path("/Earthpart/findById/{id}")
+	public Earthpart getEarthpart(@PathParam("id") Integer id) {
+		return EarthpartDao.findById(id);
 	}
+
+	@GET
+	@Path("/Earthquake/findById/{id}")
+	public Earthquake getEarthquake(@PathParam("id") Integer id) {
+		return EarthquakeDao.findById(id);
+	}
+
+//	@GET
+//	@Path("/Meldungs/bad")
+//	public Response getBadRequest() {
+//		return Response.status(Status.BAD_REQUEST).build();
+//	}
 
 }
