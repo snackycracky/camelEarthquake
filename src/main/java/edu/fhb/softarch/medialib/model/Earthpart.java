@@ -1,17 +1,19 @@
-package edu.fhb.softarch.medialib;
+package edu.fhb.softarch.medialib.model;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlRootElement(name = "Meldung", namespace = "x")
 public class Earthpart {
 
 	private Integer id;
-	
+
 	private String name;
-	
-	@XmlElement(name="erathquake", namespace="x")
-	private Earthquake erathquake;
+
+	@XmlElement(name = "erathquake", namespace = "x")
+	@XmlJavaTypeAdapter(XLinkAdapter.class)
+	private Earthquake earthquake;
 
 	public Earthpart() {
 	}
@@ -20,13 +22,14 @@ public class Earthpart {
 		this.id = id;
 		this.name = name;
 	}
-	public Earthpart(Integer id, String name,Earthquake el) {
+
+	public Earthpart(Integer id, String name, Earthquake el) {
 		this.id = id;
 		this.name = name;
-		this.erathquake = el;
+		this.earthquake = el;
 	}
-	
-	@XmlElement(name="id", namespace="x")
+
+	@XmlElement(name = "id", namespace = "x")
 	public Integer getId() {
 		return id;
 	}
@@ -39,7 +42,7 @@ public class Earthpart {
 		this.name = name;
 	}
 
-	@XmlElement(name="name", namespace="x")
+	@XmlElement(name = "name", namespace = "x")
 	public String getName() {
 		return name;
 	}

@@ -9,6 +9,11 @@ import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.cxf.CxfConstants;
 
+import edu.fhb.softarch.medialib.dao.EarthpartDao;
+import edu.fhb.softarch.medialib.dao.EarthquakeDao;
+import edu.fhb.softarch.medialib.model.Earthpart;
+import edu.fhb.softarch.medialib.model.Earthquake;
+
 public class ExampleRouter extends RouteBuilder {
 
 	@Override
