@@ -1,0 +1,35 @@
+<?xml version='1.0'?>
+<rss version='2.0'>
+<channel>
+	<title>GFZ Potsdam Earthquake Bulletin - last 20 events</title>
+	<description>Real-time world-wide earthquake locations using seismic stations of the GEOFON and associated partner networks.</description>
+	<link>http://geofon.gfz-potsdam.de/db/</link>
+	<item>
+	<location type="INTLCITY">
+	<termsofservice link="http://www.wunderground.com/members/tos.asp#api"/>
+	<country>TO</country>
+	<state/>
+	<city>Nomuka</city>
+	<tz_short/>
+	<tz_unix/>
+	<lat>-20.25000000</lat>
+	<lon>-174.80000305</lon>
+	<zip>00000</zip>
+	<magic>1</magic>
+	<wmo>91786</wmo>
+	<requesturl>/global/stations/91786.html</requesturl>
+	-
+	<wuiurl>
+	http://www.wunderground.com/global/stations/91786.html
+	</wuiurl>
+	-
+	<nearby_weather_stations>
+	<airport>
+	</airport>
+	<pws>
+	</pws>
+	</nearby_weather_stations>
+	</location>
+	</item>
+</channel>
+</rss>

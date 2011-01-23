@@ -33,7 +33,31 @@
 			<artifactId>camel-cxf</artifactId>
 			<version>${camel-version}</version>
 		</dependency>
-	
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-core</artifactId>
+			<version>${activemq-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-spring</artifactId>
+			<version>${camel-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-camel</artifactId>
+			<version>${activemq-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-rss</artifactId>
+			<version>${camel-version}</version>
+		</dependency>
+		<dependency>
+    <groupId>rome</groupId>
+    <artifactId>rome</artifactId>
+    <version>0.9</version>
+</dependency>
 	</dependencies>
 
 	<build>
@@ -89,29 +113,31 @@
 							org.apache.cxf.transports.http,
 							org.apache.cxf.workqueue,
 							org.apache.cxf.wsdl,
-							org.apache.cxf.wsdl11
-						</Import-Package>						
+							org.apache.cxf.wsdl11,
+							com.sun.syndication
+						</Import-Package>
 					</instructions>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-	
-    <repositories>
-      <repository>
-        <id>fusesource.m2</id>
-        <name>FuseSource Repository</name>
-        <url>http://repo.fusesource.com/maven2/</url>
-        <snapshots>
-          <enabled>false</enabled>
-        </snapshots>
-        <releases>
-           <enabled>true</enabled>
-        </releases>
-      </repository>
-    </repositories>
-	
+
+	<repositories>
+		<repository>
+			<id>fusesource.m2</id>
+			<name>FuseSource Repository</name>
+			<url>http://repo.fusesource.com/maven2/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+	</repositories>
+
 	<properties>
+		<activemq-version>5.4.1</activemq-version>
 		<commons.logging.version>1.1</commons.logging.version>
 		<camel-version>2.4.0-fuse-02-00</camel-version>
 	</properties>
