@@ -118,7 +118,7 @@ public class Driver {
 				//.convertBodyTo(EintragCollection.class)
 //				.filter()
 //		        .xpath("/daten/eintrag[size>5.5]")
-				.process(new Processor() {
+				.process(new Processor() { 
 					public void process(Exchange exchange) throws Exception {
 						EintragCollection ec = exchange.getIn().getBody(
 								EintragCollection.class);
