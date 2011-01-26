@@ -15,6 +15,4 @@ public class XLinkAdapter extends XmlAdapter<EarthquakeXLink,Earthquake > {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
 }

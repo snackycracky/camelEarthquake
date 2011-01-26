@@ -14,6 +14,7 @@ import org.apache.camel.spi.DataFormat;
 import com.thoughtworks.xstream.XStream;
 
 import edu.fhb.softarch.medialib.model.Eintrag;
+import edu.fhb.softarch.medialib.model.EintragCollection;
 
 
 
@@ -35,10 +36,10 @@ public class Driver {
 		context.addRoutes(new RouteBuilder() {
 			public void configure() {
 
-//				from("file:/Users/nils/Desktop/in1?noop=true")
-//						.setHeader("visited", constant(true))
-//						.to("xslt:file:src/main/resources/data/xsl/transformation2.xsl")
-//						.to("direct:start");
+				from("file:/Users/nils/Desktop/in1?noop=true")
+						.setHeader("visited", constant(true))
+						.to("xslt:file:src/main/resources/data/xsl/transformation2.xsl")
+						.to("direct:start");
 			}
 		});
 	
@@ -49,7 +50,7 @@ public class Driver {
 						.aggregate(header("visited"),
 								new MyAggregationStrategy())
 						.completionSize(3)
-						.completionTimeout(5000)
+						.completionTimeout(20000)
 						// .completionPredicate(property("completionFromBatchConsumer").isEqualTo(true))
 						// .to("file:resultSet?fileName=resultfile.xml");
 						.log("Completed by ${property.CamelAggregatedCompletedBy}")
@@ -68,7 +69,14 @@ public class Driver {
 							}
 						})
 						.to("direct:x");
-
+//				.unmarshal(jaxb)
+//				 .process(new Processor() {
+//						public void process(Exchange exchange) throws Exception {
+//							EintragCollection ec = exchange.getIn().getBody(
+//									EintragCollection.class);
+//							System.out.println("found something!\n\n\n\n"+ec);
+//						}
+//					});
 				// from("file:/Users/nils/Desktop/camelTest?noop=true")
 				// .from("file:/Users/nils/Desktop/othercamelTest?noop=true")
 				// .log("Sending ${body} id: ${header.id}")
@@ -102,16 +110,19 @@ public class Driver {
 			public void configure() {
    
 				from("direct:x")
+				//.convertBodyTo(String.class)
 				.unmarshal(jaxb)
 				//.unmarshal()
 				//.xstream()
-				.split(body(List.class))
-				.convertBodyTo(Eintrag.class)
+				//.split(body(List.class))
+				//.convertBodyTo(EintragCollection.class)
 //				.filter()
 //		        .xpath("/daten/eintrag[size>5.5]")
-		        .process(new Processor() {
+				.process(new Processor() {
 					public void process(Exchange exchange) throws Exception {
-						System.out.println("found something!\n\n\n\n");
+						EintragCollection ec = exchange.getIn().getBody(
+								EintragCollection.class);
+						System.out.println("found something!\n\n\n\n"+ec);
 					}
 				});
 			}
