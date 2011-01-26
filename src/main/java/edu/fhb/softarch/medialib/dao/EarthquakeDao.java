@@ -1,7 +1,6 @@
 package edu.fhb.softarch.medialib.dao;
 
 import edu.fhb.softarch.medialib.model.Earthquake;
-import edu.fhb.softarch.medialib.model.EarthquakeXLink;
 
 public class EarthquakeDao {
 	public static Earthquake findById(Integer id) {

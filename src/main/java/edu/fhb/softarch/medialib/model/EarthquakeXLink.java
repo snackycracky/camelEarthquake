@@ -2,12 +2,7 @@ package edu.fhb.softarch.medialib.model;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlNs;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSchema;
-import javax.xml.bind.annotation.XmlSchemaType;
-
-import org.apache.camel.builder.xml.Namespaces;
 
 @XmlRootElement(namespace = "xlink")
 public class EarthquakeXLink {

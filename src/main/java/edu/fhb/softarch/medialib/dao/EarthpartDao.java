@@ -7,7 +7,6 @@ import java.util.List;
 import edu.fhb.softarch.medialib.model.EarthPartCollection;
 import edu.fhb.softarch.medialib.model.Earthpart;
 import edu.fhb.softarch.medialib.model.Earthquake;
-import edu.fhb.softarch.medialib.model.EarthquakeXLink;
 
 public class EarthpartDao {
 

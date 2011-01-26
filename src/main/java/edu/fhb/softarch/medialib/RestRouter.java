@@ -1,10 +1,5 @@
 package edu.fhb.softarch.medialib;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 

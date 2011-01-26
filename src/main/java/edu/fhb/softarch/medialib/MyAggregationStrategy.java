@@ -1,7 +1,6 @@
 package edu.fhb.softarch.medialib;
 
 import org.apache.camel.Exchange;
-import org.apache.camel.Message;
 import org.apache.camel.processor.aggregate.AggregationStrategy;
 
 public class MyAggregationStrategy implements AggregationStrategy {

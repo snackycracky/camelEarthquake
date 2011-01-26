@@ -1,19 +1,13 @@
 package edu.fhb.softarch.medialib;
 
-import java.util.List;
-
 import org.apache.camel.CamelContext;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.converter.jaxb.JaxbDataFormat;
 import org.apache.camel.impl.DefaultCamelContext;
-import org.apache.camel.model.dataformat.XStreamDataFormat;
 import org.apache.camel.spi.DataFormat;
 
-import com.thoughtworks.xstream.XStream;
-
-import edu.fhb.softarch.medialib.model.Eintrag;
 import edu.fhb.softarch.medialib.model.EintragCollection;
 
 
