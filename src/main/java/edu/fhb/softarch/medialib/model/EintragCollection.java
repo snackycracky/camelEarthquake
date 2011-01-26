@@ -32,7 +32,11 @@ public class EintragCollection {
 	 */
 	@Override
 	public String toString() {
-		return "EintragCollection [entries=" + entries + "]";
+		Integer size = 0;
+		if(entries!=null){
+			size = entries.size();
+		}
+		return "EintragCollection [ length(entries) = " + size + "]";
 	}
 
 	

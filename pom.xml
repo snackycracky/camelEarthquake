@@ -41,7 +41,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.apache.camel</groupId>
-			<artifactId>camel-xstream</artifactId>
+			<artifactId>camel-mail</artifactId>
 			<version>${camel-version}</version>
 		</dependency>
 
@@ -60,16 +60,7 @@
 			<artifactId>activemq-camel</artifactId>
 			<version>${activemq-version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.camel</groupId>
-			<artifactId>camel-rss</artifactId>
-			<version>${camel-version}</version>
-		</dependency>
-		<dependency>
-    <groupId>rome</groupId>
-    <artifactId>rome</artifactId>
-    <version>0.9</version>
-</dependency>
+
 	</dependencies>
 
 	<build>
@@ -126,7 +117,7 @@
 							org.apache.cxf.workqueue,
 							org.apache.cxf.wsdl,
 							org.apache.cxf.wsdl11,
-							com.sun.syndication
+							org.apache.camel.converter.jaxb
 						</Import-Package>
 					</instructions>
 				</configuration>
