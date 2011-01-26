@@ -26,14 +26,6 @@ public class RestRouter extends RouteBuilder {
 
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
 		String name = RestServiceImpl.class.getName();
 		from("cxfrs://http://localhost:9000?resourceClasses=" + name).process(
 				new Processor() {
