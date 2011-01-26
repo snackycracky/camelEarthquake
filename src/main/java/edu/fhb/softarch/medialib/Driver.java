@@ -51,11 +51,6 @@ public class Driver {
 								new MyAggregationStrategy())
 						.completionSize(3)
 						.completionTimeout(20000)
-						// .completionPredicate(property("completionFromBatchConsumer").isEqualTo(true))
-						// .to("file:resultSet?fileName=resultfile.xml");
-						.log("Completed by ${property.CamelAggregatedCompletedBy}")
-						// .to("xslt:file:src/main/resources/data/xsl/transformation2.xsl")
-						
 						.process(new Processor() {
 							public void process(Exchange exchange)
 									throws Exception {
@@ -69,34 +64,6 @@ public class Driver {
 							}
 						})
 						.to("direct:x");
-//				.unmarshal(jaxb)
-//				 .process(new Processor() {
-//						public void process(Exchange exchange) throws Exception {
-//							EintragCollection ec = exchange.getIn().getBody(
-//									EintragCollection.class);
-//							System.out.println("found something!\n\n\n\n"+ec);
-//						}
-//					});
-				// from("file:/Users/nils/Desktop/camelTest?noop=true")
-				// .from("file:/Users/nils/Desktop/othercamelTest?noop=true")
-				// .log("Sending ${body} id: ${header.id}")
-				// .aggregate(xpath("/"), new MyAggregationStrategy())//
-				// .completionSize(1).completionTimeout(500000)
-				// .log("Sending out ${body} ")
-				// .to("xslt:file:src/main/resources/data/xsl/transformation.xsl");
-
-				// from("file:/Users/nils/Desktop/camelTest?noop=true")
-				// .log("-------------------------------------Sending ${body} with correlation key ${header.myId}")
-				// .aggregate(header("note"), new MyAggregationStrategy())
-				// .completionSize(3)
-				// .log("Sending out ${body}")
-				// .to("mock:result");
-				//
-
-				// from("file:/Users/nils/Desktop/camelTest?noop=true" )
-				// .aggregate(new MyAggregationStrategy()).header("id")
-				// .completionInterval(3000)
-				// .to("xslt:file:src/main/resources/data/xsl/transformation.xsl");
 			}
 			
 			
@@ -110,14 +77,7 @@ public class Driver {
 			public void configure() {
    
 				from("direct:x")
-				//.convertBodyTo(String.class)
 				.unmarshal(jaxb)
-				//.unmarshal()
-				//.xstream()
-				//.split(body(List.class))
-				//.convertBodyTo(EintragCollection.class)
-//				.filter()
-//		        .xpath("/daten/eintrag[size>5.5]")
 				.process(new Processor() { 
 					public void process(Exchange exchange) throws Exception {
 						EintragCollection ec = exchange.getIn().getBody(
