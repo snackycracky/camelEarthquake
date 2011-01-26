@@ -1,5 +1,7 @@
 package edu.fhb.softarch.medialib;
 
+import java.io.File;
+
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
@@ -13,21 +15,22 @@ import org.apache.camel.component.cxf.CxfConstants;
 import org.apache.camel.converter.jaxb.JaxbDataFormat;
 import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.camel.spi.DataFormat;
+import org.springframework.util.FileSystemUtils;
 
+import edu.fhb.softarch.GlobalConstants;
 import edu.fhb.softarch.medialib.dao.EarthpartDao;
 import edu.fhb.softarch.medialib.dao.EarthquakeDao;
 import edu.fhb.softarch.medialib.model.Earthpart;
 import edu.fhb.softarch.medialib.model.Earthquake;
 import edu.fhb.softarch.medialib.model.EintragCollection;
 
-
-
 public class Driver {
 	public static void main(String args[]) throws Exception {
 		CamelContext context = new DefaultCamelContext();
 
 		final Fileops file = new Fileops();
-		final DataFormat jaxb = new JaxbDataFormat("edu.fhb.softarch.medialib.model");
+		final DataFormat jaxb = new JaxbDataFormat(
+				"edu.fhb.softarch.medialib.model");
 
 		context.addRoutes(new RouteBuilder() {
 			public void configure() {
@@ -46,7 +49,6 @@ public class Driver {
 						.to("direct:start");
 			}
 		});
-	
 
 		context.addRoutes(new RouteBuilder() {
 			public void configure() {
@@ -60,68 +62,72 @@ public class Driver {
 									throws Exception {
 								String body = exchange.getIn().getBody(
 										String.class);
-								
+
 								System.out.println(body);
-								file.writeToFile(
-										"/Users/nils/Desktop/zwischenergebnis.xml",
-										"\n" + body, true);
+								String resultFilepath = GlobalConstants.IntermediateResult;
+								File f = new File(
+										resultFilepath);
+								if (f.delete()) {
+									file.writeToFile(
+											resultFilepath,
+											"\n" + body, true);
+								}
 							}
 						})
 						.to("direct:UnmarshallMergedSources")
 						.to("direct:filterBiggestEarthquakes");
 			}
-			
-			
-			
-			
-			
-			
+
 		});
-		
+
 		context.addRoutes(new RouteBuilder() {
 			public void configure() {
-   
+
 				from("direct:UnmarshallMergedSources")
-				.unmarshal(jaxb)
-				.process(new Processor() { 
-					public void process(Exchange exchange) throws Exception {
-						
-						EintragCollection ec = exchange.getIn().getBody(
-								EintragCollection.class);
-						
-						System.out.println("\n\nfound something!\n\n");
-						
-					}
-				});
+						.unmarshal(jaxb)
+						// .process(new Processor() {
+						// public void process(Exchange exchange) throws
+						// Exception {
+						//
+						// EintragCollection ec = exchange.getIn().getBody(
+						// EintragCollection.class);
+						//
+						// System.out.println("\n\nfound something!\n\n");
+						//
+						// }
+						// })
+						.marshal(jaxb)
+						.to("file:/Users/nils/Desktop/result.xml");
 			}
 		});
-		
+
 		context.addRoutes(new RouteBuilder() {
 			public void configure() {
-				from("direct:filterBiggestEarthquakes")
-				.filter()
-                .xpath("/daten/eintrag[size>5.5]")//
-				.to("direct:NotifyByEmail")
-				.process(new Processor() { 
-					public void process(Exchange exchange) throws Exception {
-//						System.out.println(exchange.getIn());
-					} 
-				});
+				from("direct:filterBiggestEarthquakes").filter()
+						.xpath("/daten/eintrag/size/text()>5.5")//
+						.to("direct:NotifyByEmail").process(new Processor() {
+							public void process(Exchange exchange)
+									throws Exception {
+								// System.out.println(exchange.getIn());
+							}
+						});
 			}
 		});
 		context.addRoutes(new RouteBuilder() {
 			public void configure() {
 				from("direct:NotifyByEmail")
-				.to("smtps://camelfhb@smtp.gmail.com?password=camelfhb31&to=camelfhb@googlemail.com")
-				.process(new Processor() { 
-					public void process(Exchange exchange) throws Exception {
-//						EintragCollection ec = exchange.getIn().getBody(
-//								EintragCollection.class);
-					}
-				});
+						.to("smtps://camelfhb@smtp.gmail.com?password=camelfhb31&to=camelfhb@googlemail.com")
+						.process(new Processor() {
+							public void process(Exchange exchange)
+									throws Exception {
+								// EintragCollection ec =
+								// exchange.getIn().getBody(
+								// EintragCollection.class);
+							}
+						});
 			}
 		});
-		
+
 		context.start();
 		Thread.sleep(35000);
 	}

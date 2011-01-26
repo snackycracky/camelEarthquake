@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement( namespace="")//(name="eintrag")
+@XmlRootElement( namespace="",name="eintrag")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Eintrag {
 
