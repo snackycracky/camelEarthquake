@@ -19,6 +19,8 @@ public class Eintrag {
 	private String location;
 	@XmlElement
 	private String weather;
+	
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */

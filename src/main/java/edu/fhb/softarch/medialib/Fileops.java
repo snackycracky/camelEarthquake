@@ -23,7 +23,6 @@ public class Fileops {
 	
 	public boolean writeToFile(String filename, String daten, boolean append) {
 	
-		String zeile; 
 		File res; 
 		FileWriter fw; 
 		BufferedWriter bw; 
@@ -51,10 +50,6 @@ public class Fileops {
 	
 	public String readFile(String filename) {
 
-		String zeile; 
-		File res; 
-		FileWriter fw; 
-		BufferedWriter bw; 
 	
 		/*Dateien mit Informationen anreichern*/
 		//Dazu die Datei komplett einlesen ...

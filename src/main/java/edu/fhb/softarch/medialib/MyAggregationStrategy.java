@@ -18,9 +18,6 @@ public class MyAggregationStrategy implements AggregationStrategy {
 		.replaceAll("</daten>(.*)<daten>", "")
 		.replaceAll("</daten><daten xmlns:geo=\"http://www\\.w3\\.org/2003/01/geo/wgs84_pos#\">", "")
 		.replaceAll("</daten><daten>", "");
-//		.replaceAll("<daten>", "")
-//		.replaceAll("<daten(.*)>","")
-		
 
 		oldExchange.getIn().setBody(body);
 		return oldExchange;
