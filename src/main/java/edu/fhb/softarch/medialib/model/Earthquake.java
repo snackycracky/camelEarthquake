@@ -19,13 +19,98 @@ public class Earthquake {
 	private String location;
 	@XmlElement
 	private String weather;
+	@XmlElement
+	private String counrty;
 
 	public Earthquake() {
+	}
+
+	/**
+	 * @return the title
+	 */
+	public String getTitle() {
+		return title;
+	}
+
+	/**
+	 * @param title the title to set
+	 */
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	/**
+	 * @return the size
+	 */
+	public Float getSize() {
+		return size;
+	}
+
+	/**
+	 * @param size the size to set
+	 */
+	public void setSize(Float size) {
+		this.size = size;
+	}
+
+	/**
+	 * @return the date
+	 */
+	public String getDate() {
+		return date;
+	}
+
+	/**
+	 * @param date the date to set
+	 */
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	/**
+	 * @return the weather
+	 */
+	public String getWeather() {
+		return weather;
+	}
+
+	/**
+	 * @param weather the weather to set
+	 */
+	public void setWeather(String weather) {
+		this.weather = weather;
+	}
+
+	/**
+	 * @return the counrty
+	 */
+	public String getCounrty() {
+		return counrty;
+	}
+
+	/**
+	 * @param location the location to set
+	 */
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	/**
+	 * @param city the city to set
+	 */
+	public void setCounrty(String counrty) {
+		this.counrty = counrty;
 	}
 
 	public Earthquake(final Float size, final String title) {
 		this.size = size;
 		this.title = title;
+	}
+
+
+	public String getLocation() {
+		// TODO Auto-generated method stub
+		return location;
 	}
 
 }

@@ -38,6 +38,10 @@ public class EarthquakeCollection {
 		return "EarthquakeCollection [ length(entries) = " + size + "]";
 	}
 
+	public void setEntries(List<Earthquake> entries) {
+		this.entries = entries;
+	}
+
 	
 
 	

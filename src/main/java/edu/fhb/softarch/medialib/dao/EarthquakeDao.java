@@ -13,32 +13,11 @@ import edu.fhb.softarch.medialib.model.EarthquakeCollection;
 
 public class EarthquakeDao {
 	public static Earthquake findById(Integer id) {
+		
 		System.out.println("EarthquakeDao.findById()");
-		JAXBContext jaxbContext;
-		try {
-			jaxbContext = JAXBContext.newInstance(EarthquakeCollection.class);
 
-			FileInputStream xml = new FileInputStream(
-					GlobalConstants.IntermediateResult);
-			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+		return JaxBUtil.unmarshall().getEntries().get(id);
 
-			EarthquakeCollection l = (EarthquakeCollection) unmarshaller
-					.unmarshal(xml);
-			assert l.getEntries() != null;
-			System.out.println("returning an entry now; " + l.getEntries());
-
-			return l.getEntries().get(id);
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-
-		if (id == 1) {
-			// return new Earthquake(1.1f,1);
-		} else {
-			// return new Earthquake(1.2f,1);
-		}
-		return null;
+		
 	}
 }

@@ -2,7 +2,7 @@ package edu.fhb.softarch.medialib.model;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-public class XLinkAdapter extends XmlAdapter<EarthquakeXLink,Earthquake > {
+public class XLinkAdapterEarthquake extends XmlAdapter<EarthquakeXLink,Earthquake > {
 
 	@Override
 	public EarthquakeXLink marshal(Earthquake arg0) throws Exception {

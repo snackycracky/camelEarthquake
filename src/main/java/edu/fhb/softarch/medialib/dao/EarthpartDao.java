@@ -1,31 +1,49 @@
 package edu.fhb.softarch.medialib.dao;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import edu.fhb.softarch.medialib.model.EarthPartCollection;
 import edu.fhb.softarch.medialib.model.Earthpart;
 import edu.fhb.softarch.medialib.model.Earthquake;
+import edu.fhb.softarch.medialib.model.EarthquakeCollection;
 
 public class EarthpartDao {
 
-	public static Earthpart findById(Integer id) {
-		return null;
-//		if (id == 1) {
-//			return new Earthpart(1, "Erdbeben Alter!", new Earthquake(1.1f, 1));
-//		} else {
-//			return new Earthpart(2, "Alles Stabil!");
-//		}
-	}
+	public static EarthPartCollection all() {
 
-	public static Collection<Earthpart> all() {
-		return null;
+		EarthquakeCollection quakeCollection = JaxBUtil.unmarshall();
+		EarthPartCollection partCollection = new EarthPartCollection();
+		List<Earthpart> partList = new ArrayList<Earthpart>();
+		Set<String> distinctCountrys = new HashSet<String>();
+		
+		
+		
+		for (Earthquake iterable_element : quakeCollection.getEntries()) {
+			distinctCountrys.add(iterable_element.getCounrty());
+		}
+		
+		
+		
+		
+		List<Earthquake> tmpList = new ArrayList<Earthquake>();
+		for(String country : distinctCountrys){
+			
+			for (Earthquake iterable_element : quakeCollection.getEntries()) {
+				if(iterable_element.getCounrty().equals(country)){
+					tmpList.add(iterable_element);
+				}
+			}
+			partList.add(new Earthpart(country,new EarthquakeCollection(tmpList)));
+			
 
-//		List<Earthpart> l = new ArrayList<Earthpart>();
-//		l.add(new Earthpart(1, "Erdbeben Alter!", new Earthquake(2.1f, 1)));
-//		l.add(new Earthpart(2, "Erdbeben 1!", new Earthquake(3.1f, 1)));
-//
-//		return new EarthPartCollection(l).getEarthparts();
+		}
+		partCollection.setEarthparts(partList);
+		System.out.println("\n\n\n collection:"+partCollection);
+		return partCollection;
 	}
 }

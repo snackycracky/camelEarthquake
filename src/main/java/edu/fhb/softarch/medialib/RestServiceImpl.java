@@ -21,13 +21,7 @@ public class RestServiceImpl {
 	@GET
 	@Path("/Earthparts")
 	public EarthPartCollection getAllEarthparts() {
-		return new EarthPartCollection(EarthpartDao.all());
-	}
-
-	@GET
-	@Path("/Earthpart/findById/{id}")
-	public Earthpart getEarthpart(@PathParam("id") Integer id) {
-		return EarthpartDao.findById(id);
+		return EarthpartDao.all();
 	}
 
 	@GET
@@ -36,10 +30,5 @@ public class RestServiceImpl {
 		return EarthquakeDao.findById(id);
 	}
 
-	// @GET
-	// @Path("/Meldungs/bad")
-	// public Response getBadRequest() {
-	// return Response.status(Status.BAD_REQUEST).build();
-	// }
 
 }

@@ -62,29 +62,6 @@ public class RestRouter extends RouteBuilder {
 								foundSomething = true;
 							}
 						}
-						if ("getEarthpart".equals(operationName)) {
-
-							String findByIdPath = "/Earthpart/findById/";
-							if (path.contains(findByIdPath)) {
-								String ident = path.split(findByIdPath)[1];
-								syso(ident);
-								Earthpart findById = EarthpartDao
-										.findById(Integer.parseInt(ident));
-								syso(findById);
-								exchange.getOut().setBody(findById);
-								foundSomething = true;
-							}
-
-							if ("/myservice/Meldung/1".equals(path)) {
-								syso("ok! setting body for response now");
-								// We just put the response Object into the out
-								// message body
-								exchange.getOut().setBody(
-										EarthpartDao.findById(1));
-								foundSomething = true;
-							}
-
-						}
 						if (!foundSomething) {
 							syso("the path was: " + path);
 							Response r = Response

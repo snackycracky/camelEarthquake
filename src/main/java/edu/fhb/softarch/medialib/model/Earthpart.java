@@ -1,20 +1,35 @@
 package edu.fhb.softarch.medialib.model;
 
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlRootElement(name = "Meldung", namespace = "x")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Earthpart {
 
+	@XmlElement(name = "id", namespace = "x")
 	private Integer id;
 
+	@XmlElement(name = "name", namespace = "x")
 	private String name;
+	@XmlElement(name = "counrty", namespace = "x")
+	private String country;
 
 	@XmlElement(name = "erathquake", namespace = "x")
-	@XmlJavaTypeAdapter(XLinkAdapter.class)
+	@XmlJavaTypeAdapter(XLinkAdapterEarthquake.class)
 	private Earthquake earthquake;
-
+	
+	@XmlElementWrapper(name="erathquakes")
+	@XmlElement(name = "erathquake", namespace = "x")
+	@XmlJavaTypeAdapter(XLinkAdapterEarthquake.class)
+	private List<Earthquake> erathquakes;
+	
 	public Earthpart() {
 	}
 
@@ -29,7 +44,20 @@ public class Earthpart {
 		this.earthquake = el;
 	}
 
-	@XmlElement(name = "id", namespace = "x")
+	public Earthpart(Earthquake el) {
+		this.country = el.getCounrty();
+		this.earthquake = el;
+	}
+
+	public Earthpart(String country2) {
+		this.country = country2;
+	}
+
+	public Earthpart(String country2, EarthquakeCollection earthquakeCollection) {
+		this.country = country2;
+		this.erathquakes = earthquakeCollection.getEntries();
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -42,7 +70,6 @@ public class Earthpart {
 		this.name = name;
 	}
 
-	@XmlElement(name = "name", namespace = "x")
 	public String getName() {
 		return name;
 	}
