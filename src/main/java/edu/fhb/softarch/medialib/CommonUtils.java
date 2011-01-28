@@ -62,7 +62,7 @@ public class CommonUtils {
 			    		result = locale.getDisplayCountry();
 			    	}
 			    }
-//			    System.out.println("" + result + "");
+			    System.out.println("" + result + "");
 				
 			}
 		} catch (MalformedURLException e) {

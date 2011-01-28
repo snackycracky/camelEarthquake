@@ -65,7 +65,12 @@ public class Driver {
 //									throws Exception {
 //								String body = exchange.getIn().getBody(
 //										String.class);
-//								body=body.replaceFirst("<daten>", "<daten xmlns=\""+HTTP_WWW_W3_ORG_2003_01_GEO_WGS84_POS+"\">");
+//								body = body
+//										.replaceFirst(
+//												"<daten>",
+//												"<daten xmlns=\""
+//														+ HTTP_WWW_W3_ORG_2003_01_GEO_WGS84_POS
+//														+ "\">");
 //								System.out.println(body);
 //								String resultFilepath = GlobalConstants.IntermediateResult;
 //								File f = new File(resultFilepath);
@@ -73,7 +78,7 @@ public class Driver {
 //									file.writeToFile(resultFilepath, "\n"
 //											+ body, true);
 //								}
-//								exchange.getIn().setBody(body,String.class);
+//								exchange.getIn().setBody(body, String.class);
 //							}
 //						}).to("direct:UnmarshallMergedSources")
 //						// .to("direct:rest")
@@ -84,41 +89,51 @@ public class Driver {
 //
 //		context.addRoutes(new RouteBuilder() {
 //			public void configure() {
-//				Namespaces ns = new Namespaces("", HTTP_WWW_W3_ORG_2003_01_GEO_WGS84_POS);
 //				// from("direct:UnmarshallMergedSources")
 //				from("direct:UnmarshallMergedSources")
-//				.filter(ns.xpath("/daten/eintrag[size>5.5]"))
 //				.unmarshal(jaxb)
-//						.process(new Processor() {
-//							public void process(Exchange exchange)
-//									throws Exception {
-//								EarthquakeCollection ec = exchange.getIn()
-//										.getBody(EarthquakeCollection.class);
-//								System.out.println("found something!\n\n\n\n"
-//										+ ec);
+//				.process(new Processor() {
+//					public void process(Exchange exchange)
+//							throws Exception {
+//						EarthquakeCollection ec = exchange.getIn()
+//								.getBody(EarthquakeCollection.class);
+//						System.out.println("found something!\n\n\n\n"
+//								+ ec);
 //
-//								ArrayList<Earthquake> listClone = new ArrayList<Earthquake>();
-//								int i = 1;
-//								for (Earthquake e : ec.getEntries()) {
-//									String additionalInfo = CommonUtils
-//											.findAdditionalInfo(e.getLocation());
+//						ArrayList<Earthquake> listClone = new ArrayList<Earthquake>();
+//						int i = 1;
+//						for (Earthquake e : ec.getEntries()) {
+//							String additionalInfo = CommonUtils
+//									.findAdditionalInfo(e.getLocation());
 //
-//									e.setCounrty(additionalInfo
-//											.contains("not found") ? "nothing"
-//											: additionalInfo);
+//							e.setCountry(additionalInfo
+//									.contains("not found") ? "nothing"
+//									: additionalInfo);
 //
-//									listClone.add(e);
-//									if (i++ > 20) {
-//										break;// TODO timeout!
-//									}
-//								}
-//								ec.setEntries(listClone);
-//								exchange.getIn().setBody(ec,
-//										EarthquakeCollection.class);
+//							listClone.add(e);
+//							if (i++ > 5) {
+//								break;// TODO timeout!
 //							}
-//						}).marshal(jaxb)
-//						// .to("file://"+GlobalConstants.IntermediateResult+"?append=false");
-//						.to("file:/Users/nils/Desktop/result.xml").delay(50000);
+//						}
+//						ec.setEntries(listClone);
+//						exchange.getIn().setBody(ec,
+//								EarthquakeCollection.class);
+//					}
+//				})
+//				.process(new Processor() {
+//					public void process(Exchange exchange) throws Exception {
+//
+//						String body = exchange.getIn().getBody(String.class);
+//						body = body.replaceAll("<\\?xml(.*)>", "");
+//						
+//						file.writeToFile(GlobalConstants.IntermediateResult+".xml",
+//								"\n" + body, false);
+//					}
+//				})
+//				.marshal(jaxb)
+//				
+//				// .to("file://"+GlobalConstants.IntermediateResult+"?append=false");
+//				.to("file:/Users/nils/Desktop/result.xml").delay(10000);
 //			}
 //		});
 //

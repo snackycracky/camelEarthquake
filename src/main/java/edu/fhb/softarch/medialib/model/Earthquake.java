@@ -10,17 +10,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Earthquake {
 
 	@XmlElement 
-	private String title;
+	private String title = "";
 	@XmlElement
-	private Float size;
+	private Float size= 0.0f;
 	@XmlElement
-	private String date;
+	private String date= "";
 	@XmlElement
-	private String location;
+	private String location= "";
 	@XmlElement
-	private String weather;
+	private String weather= "";
 	@XmlElement
-	private String counrty;
+	private String country= "";
 
 	public Earthquake() {
 	}
@@ -85,7 +85,7 @@ public class Earthquake {
 	 * @return the counrty
 	 */
 	public String getCounrty() {
-		return counrty;
+		return country;
 	}
 
 	/**
@@ -98,8 +98,8 @@ public class Earthquake {
 	/**
 	 * @param city the city to set
 	 */
-	public void setCounrty(String counrty) {
-		this.counrty = counrty;
+	public void setCountry(String counrty) {
+		this.country = counrty;
 	}
 
 	public Earthquake(final Float size, final String title) {
@@ -108,8 +108,15 @@ public class Earthquake {
 	}
 
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Earthquake [title=" + title + ", counrty=" + country + "]";
+	}
+
 	public String getLocation() {
-		// TODO Auto-generated method stub
 		return location;
 	}
 

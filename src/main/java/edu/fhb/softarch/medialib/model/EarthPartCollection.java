@@ -5,13 +5,17 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 
-@XmlRootElement
+@XmlRootElement(name = "parts", namespace="")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class EarthPartCollection {
 
+	
+	
+	@XmlElement(name = "part", namespace="")
 	private List<Earthpart> earthparts = new ArrayList<Earthpart>();
 
 	public EarthPartCollection() {
@@ -21,10 +25,24 @@ public class EarthPartCollection {
 		this.earthparts = parts;
 	}
 
-//	@XmlElement(name = "Earthpart")
-	//@XmlElementWrapper(name = "Earthparts")
+	public EarthPartCollection(Earthpart part) {
+		this.earthparts.add(part);
+	}
+
+
+
+	//	@XmlElement(name = "Earthpart")
+//	@XmlElementWrapper(name = "Earthparts")
 	public List<Earthpart> getEarthparts() {
 		return earthparts;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "EarthPartCollection [earthparts=" + earthparts + "]";
 	}
 
 	/**

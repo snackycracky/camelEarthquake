@@ -21,14 +21,9 @@ public class EarthpartDao {
 		List<Earthpart> partList = new ArrayList<Earthpart>();
 		Set<String> distinctCountrys = new HashSet<String>();
 		
-		
-		
 		for (Earthquake iterable_element : quakeCollection.getEntries()) {
 			distinctCountrys.add(iterable_element.getCounrty());
 		}
-		
-		
-		
 		
 		List<Earthquake> tmpList = new ArrayList<Earthquake>();
 		for(String country : distinctCountrys){
@@ -38,12 +33,18 @@ public class EarthpartDao {
 					tmpList.add(iterable_element);
 				}
 			}
-			partList.add(new Earthpart(country,new EarthquakeCollection(tmpList)));
-			
-
+			partList.add(new Earthpart(country, new EarthquakeCollection(tmpList)));//
 		}
 		partCollection.setEarthparts(partList);
-		System.out.println("\n\n\n collection:"+partCollection);
+		System.out.println("----------------->collection:"+partCollection);
 		return partCollection;
+		
+		
+		
+//		List<Earthpart> l = new ArrayList<Earthpart>();
+//		l.add(new Earthpart("x"));//new Earthquake(1.1f, "m")
+//		l.add(new Earthpart("y"));//new Earthquake(2.2f, "d"))
+//		
+//		return new EarthPartCollection(l );
 	}
 }

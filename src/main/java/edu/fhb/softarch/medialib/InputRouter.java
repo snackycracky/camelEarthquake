@@ -24,16 +24,14 @@ public class InputRouter extends RouteBuilder {
 		final DataFormat jaxb = new JaxbDataFormat(
 				"edu.fhb.softarch.medialib.model");
 
-		from(
-				"http://geofon.gfz-potsdam.de/db/eqinfo.php?fmt=rss&splitEntries=false")
+		from("http://geofon.gfz-potsdam.de/db/eqinfo.php?fmt=rss&splitEntries=false")
 
 				// from("http://localhost/eqInfo.xml")
 				.setHeader("visited", constant(true))
 				.to("xslt:data/xsl/transformation.xsl").to("direct:start")
 				.delay(1000);
 
-		from(
-				"http://earthquake.usgs.gov/eqcenter/catalogs/eqs1day-M2.5.xml?splitEntries=false")
+		from("http://earthquake.usgs.gov/eqcenter/catalogs/eqs1day-M2.5.xml?splitEntries=false")
 				// from("http://localhost/eqs1dat.xml")
 				.setHeader("visited", constant(true))
 				.to("xslt:data/xsl/transformation2.xsl").to("direct:start")
@@ -45,23 +43,23 @@ public class InputRouter extends RouteBuilder {
 				.completionSize(2)
 				.completionTimeout(3000)
 				.delay(3000)
-				.process(new Processor() {
-					public void process(Exchange exchange) throws Exception {
-
-						String body = exchange.getIn().getBody(String.class);
-
-						file.writeToFile(GlobalConstants.IntermediateResult,
-								"\n" + body, false);
-					}
-				})
+//				.process(new Processor() {
+//					public void process(Exchange exchange) throws Exception {
+//
+//						String body = exchange.getIn().getBody(String.class);
+//
+//						file.writeToFile(GlobalConstants.IntermediateResult,
+//								"\n" + body, false);
+//					}
+//				})
 				// .to("file://"+GlobalConstants.IntermediateResult+"?append=false")
 				.to("direct:UnmarshallMergedSources")
 				.to("direct:filterBiggestEarthquakes");
 
 		Namespaces ns = new Namespaces("", HTTP_WWW_W3_ORG_2003_01_GEO_WGS84_POS);
-		// from("direct:UnmarshallMergedSources")
+//		from("direct:UnmarshallMergedSources")
 		from("direct:UnmarshallMergedSources")
-		.filter(ns.xpath("/daten/eintrag[size>5.5]"))
+//		.filter(ns.xpath("/daten/eintrag[size>5.5]"))
 		.unmarshal(jaxb)
 				.process(new Processor() {
 					public void process(Exchange exchange)
@@ -77,12 +75,12 @@ public class InputRouter extends RouteBuilder {
 							String additionalInfo = CommonUtils
 									.findAdditionalInfo(e.getLocation());
 
-							e.setCounrty(additionalInfo
+							e.setCountry(additionalInfo
 									.contains("not found") ? "nothing"
 									: additionalInfo);
 
 							listClone.add(e);
-							if (i++ > 20) {
+							if (i++ > 5) {
 								break;// TODO timeout!
 							}
 						}
@@ -90,7 +88,19 @@ public class InputRouter extends RouteBuilder {
 						exchange.getIn().setBody(ec,
 								EarthquakeCollection.class);
 					}
-				}).marshal(jaxb)
+				})
+				.process(new Processor() {
+					public void process(Exchange exchange) throws Exception {
+
+						String body = exchange.getIn().getBody(String.class);
+						body = body.replaceAll("<\\?xml(.*)>", "");
+						
+						file.writeToFile(GlobalConstants.IntermediateResult,
+								"\n" + body, false);
+					}
+				})
+				.marshal(jaxb)
+				
 				// .to("file://"+GlobalConstants.IntermediateResult+"?append=false");
 				.to("file:/Users/nils/Desktop/result.xml").delay(10000);
 

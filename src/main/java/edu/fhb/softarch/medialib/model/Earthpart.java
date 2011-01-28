@@ -9,27 +9,27 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-@XmlRootElement(name = "Meldung", namespace = "x")
+@XmlRootElement(name = "part", namespace = "x")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Earthpart {
 
 	@XmlElement(name = "id", namespace = "x")
-	private Integer id;
+	private Integer id = 0;
 
 	@XmlElement(name = "name", namespace = "x")
-	private String name;
-	@XmlElement(name = "counrty", namespace = "x")
-	private String country;
+	private String name = "";
+	@XmlElement(name = "country", namespace = "x")
+	private String country = "";
 
 	@XmlElement(name = "erathquake", namespace = "x")
 	@XmlJavaTypeAdapter(XLinkAdapterEarthquake.class)
 	private Earthquake earthquake;
-	
-	@XmlElementWrapper(name="erathquakes")
-	@XmlElement(name = "erathquake", namespace = "x")
-	@XmlJavaTypeAdapter(XLinkAdapterEarthquake.class)
-	private List<Earthquake> erathquakes;
-	
+
+	 @XmlElementWrapper(name="erathquakes")
+	 @XmlElement(name = "erathquake", namespace = "x")
+	 @XmlJavaTypeAdapter(XLinkAdapterEarthquake.class)
+	 private List<Earthquake> earthquakes;
+
 	public Earthpart() {
 	}
 
@@ -40,6 +40,11 @@ public class Earthpart {
 
 	public Earthpart(Integer id, String name, Earthquake el) {
 		this.id = id;
+		this.name = name;
+		this.earthquake = el;
+	}
+	public Earthpart( String name, Earthquake el) {
+		
 		this.name = name;
 		this.earthquake = el;
 	}
@@ -55,7 +60,7 @@ public class Earthpart {
 
 	public Earthpart(String country2, EarthquakeCollection earthquakeCollection) {
 		this.country = country2;
-		this.erathquakes = earthquakeCollection.getEntries();
+		this.earthquakes = earthquakeCollection.getEntries();
 	}
 
 	public Integer getId() {
@@ -74,9 +79,13 @@ public class Earthpart {
 		return name;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
-		return String.format("{id=%s,meldung=%s}", id, name);
+		return "Earthpart [id=" + id + ", name=" + name + ", country="
+				+ country + ", earthquakes=" + earthquakes + "]";
 	}
 
 }
