@@ -1,6 +1,8 @@
-package edu.fhb.softarch.medialib.model;
+package edu.fhb.softarch.medialib.model.adapter;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
+
+import edu.fhb.softarch.medialib.model.Earthquake;
 
 public class XLinkAdapterEarthquake extends XmlAdapter<EarthquakeXLink,Earthquake > {
 

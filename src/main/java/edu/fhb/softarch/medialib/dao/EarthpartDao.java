@@ -37,14 +37,6 @@ public class EarthpartDao {
 		}
 		partCollection.setEarthparts(partList);
 		System.out.println("----------------->collection:"+partCollection);
-		return partCollection;
-		
-		
-		
-//		List<Earthpart> l = new ArrayList<Earthpart>();
-//		l.add(new Earthpart("x"));//new Earthquake(1.1f, "m")
-//		l.add(new Earthpart("y"));//new Earthquake(2.2f, "d"))
-//		
-//		return new EarthPartCollection(l );
+		return partCollection;		
 	}
 }
