@@ -24,7 +24,7 @@
  
 
 <xsl:template match="/">
-	<daten>
+	<earthquakes>
 		<xsl:for-each select="rss/channel/item">
 			<xsl:variable name = "E" ><xsl:value-of select="description" /></xsl:variable> 
 			<xsl:variable name = "D" ><xsl:value-of select="geo:long" /></xsl:variable> 
@@ -44,7 +44,7 @@
 			    </xsl:call-template>
 			  </xsl:variable>
 			
-			<eintrag>
+			<earthquake>
 				<size> <xsl:value-of select="$withoutM " /> </size>  
 				<title> <xsl:value-of select="substring-after($B,',') " /> </title> 
 				<date>  
@@ -68,11 +68,11 @@
 				<location> <xsl:value-of select="geo:lat" /><xsl:text>,</xsl:text><xsl:value-of select="geo:long" />	</location>
 				<weather> </weather>
 				<link> <xsl:value-of select="link" /> </link>
-			</eintrag>
+			</earthquake>
 			
 		</xsl:for-each>
 		
-	</daten>
+	</earthquakes>
 
 </xsl:template>
 

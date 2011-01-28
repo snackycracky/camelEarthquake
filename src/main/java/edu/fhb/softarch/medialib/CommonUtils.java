@@ -54,16 +54,17 @@ public class CommonUtils {
 						result.indexOf("</country>"));
 				result = result.replace("<country>", "");
 				// entry=str.replace("<addInfo/>","<addInfo>"+result+"</addInfo>");
-//				System.out.println("" + result + "");
-				
+				// System.out.println("" + result + "");
+
 				Locale[] locales = Locale.getAvailableLocales();
-			    for (Locale locale : locales) {
-			    	if(result.toUpperCase().trim().equals(locale.getCountry().toUpperCase().trim())){
-			    		result = locale.getDisplayCountry();
-			    	}
-			    }
-//			    System.out.println("" + result + "");
-				
+				for (Locale locale : locales) {
+					if (result.toUpperCase().trim()
+							.equals(locale.getCountry().toUpperCase().trim())) {
+						result = locale.getDisplayCountry();
+					}
+				}
+				// System.out.println("" + result + "");
+
 			}
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block

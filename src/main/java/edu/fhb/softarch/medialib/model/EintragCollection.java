@@ -8,13 +8,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "daten", namespace="")
+@XmlRootElement(name = "earthquakes", namespace = "")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class EintragCollection {
 
-	
-	@XmlElement(name = "eintrag", namespace="")
-	private List<Eintrag> entries =  new ArrayList<Eintrag>();;
+	@XmlElement(name = "earthquake", namespace = "")
+	private List<Eintrag> entries = new ArrayList<Eintrag>();;
 
 	public EintragCollection() {
 	}
@@ -27,19 +26,18 @@ public class EintragCollection {
 		return entries;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		Integer size = 0;
-		if(entries!=null){
+		if (entries != null) {
 			size = entries.size();
 		}
 		return "EintragCollection [ length(entries) = " + size + "]";
 	}
 
-	
-
-	
 }

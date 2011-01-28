@@ -51,7 +51,8 @@ public class Earthpart {
 	 */
 	@Override
 	public String toString() {
-		return "Earthpart [name=" + name + ", earthquakes=" + earthquakes + "]";
+		return "\n\tEarthpart [name=" + name + ", earthquakes=" + earthquakes
+				+ "]";
 	}
 
 }

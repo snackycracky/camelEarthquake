@@ -2,25 +2,32 @@ package edu.fhb.softarch.medialib.model;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
-@XmlRootElement( namespace="",name="eintrag")
+@XmlRootElement(namespace = "", name = "earthquake")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Earthquake {
-
-	@XmlElement 
+	
+	@XmlElement
 	private String title = "";
 	@XmlElement
-	private Float size= 0.0f;
+	private Float size = 0.0f;
 	@XmlElement
-	private String date= "";
+	private String date = "";
 	@XmlElement
-	private String location= "";
+	private String location = "";
+
 	@XmlElement
-	private String weather= "";
+	private String weather = "";
 	@XmlElement
-	private String country= "";
+	private String country = "";
+	
+
+	@XmlAttribute
+	private Integer id ;
 
 	public Earthquake() {
 	}
@@ -33,12 +40,19 @@ public class Earthquake {
 	}
 
 	/**
-	 * @param title the title to set
+	 * @param title
+	 *            the title to set
 	 */
 	public void setTitle(String title) {
 		this.title = title;
 	}
 
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	/**
 	 * @return the size
 	 */
@@ -47,7 +61,8 @@ public class Earthquake {
 	}
 
 	/**
-	 * @param size the size to set
+	 * @param size
+	 *            the size to set
 	 */
 	public void setSize(Float size) {
 		this.size = size;
@@ -61,7 +76,8 @@ public class Earthquake {
 	}
 
 	/**
-	 * @param date the date to set
+	 * @param date
+	 *            the date to set
 	 */
 	public void setDate(String date) {
 		this.date = date;
@@ -75,7 +91,8 @@ public class Earthquake {
 	}
 
 	/**
-	 * @param weather the weather to set
+	 * @param weather
+	 *            the weather to set
 	 */
 	public void setWeather(String weather) {
 		this.weather = weather;
@@ -89,14 +106,16 @@ public class Earthquake {
 	}
 
 	/**
-	 * @param location the location to set
+	 * @param location
+	 *            the location to set
 	 */
 	public void setLocation(String location) {
 		this.location = location;
 	}
 
 	/**
-	 * @param city the city to set
+	 * @param city
+	 *            the city to set
 	 */
 	public void setCountry(String counrty) {
 		this.country = counrty;
@@ -107,17 +126,22 @@ public class Earthquake {
 		this.title = title;
 	}
 
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "Earthquake [title=" + title + ", counrty=" + country + "]";
+		return "\n\tEarthquake [title=" + title + ", counrty=" + country + "]";
 	}
 
 	public String getLocation() {
 		return location;
+	}
+
+	public Integer getId() {
+		return id;
 	}
 
 }

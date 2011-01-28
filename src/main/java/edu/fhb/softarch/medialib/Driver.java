@@ -27,9 +27,9 @@ import edu.fhb.softarch.medialib.model.EarthquakeCollection;
 import edu.fhb.softarch.medialib.model.EintragCollection;
 
 public class Driver {
-//	private static final String HTTP_WWW_W3_ORG_2003_01_GEO_WGS84_POS = "http://www.w3.org/2003/01/geo/wgs84_pos";
-//
-//	public static void main(String args[]) throws Exception {
+	private static final String HTTP_WWW_W3_ORG_2003_01_GEO_WGS84_POS = "http://www.w3.org/2003/01/geo/wgs84_pos";
+
+	public static void main(String args[]) throws Exception {
 //		CamelContext context = new DefaultCamelContext();
 //
 //		final CommonUtils file = new CommonUtils();
@@ -91,14 +91,11 @@ public class Driver {
 //			public void configure() {
 //				// from("direct:UnmarshallMergedSources")
 //				from("direct:UnmarshallMergedSources")
-//				.unmarshal(jaxb)
-//				.process(new Processor() {
-//					public void process(Exchange exchange)
-//							throws Exception {
-//						EarthquakeCollection ec = exchange.getIn()
-//								.getBody(EarthquakeCollection.class);
-//						System.out.println("found something!\n\n\n\n"
-//								+ ec);
+//				.unmarshal(jaxb).process(new Processor() {
+//					public void process(Exchange exchange) throws Exception {
+//						EarthquakeCollection ec = exchange.getIn().getBody(
+//								EarthquakeCollection.class);
+//						System.out.println("found something!\n\n\n\n" + ec);
 //
 //						ArrayList<Earthquake> listClone = new ArrayList<Earthquake>();
 //						int i = 1;
@@ -106,34 +103,32 @@ public class Driver {
 //							String additionalInfo = CommonUtils
 //									.findAdditionalInfo(e.getLocation());
 //
-//							e.setCountry(additionalInfo
-//									.contains("not found") ? "nothing"
+//							e.setCountry(additionalInfo.contains("not found") ? "nothing"
 //									: additionalInfo);
+//							e.setId(i++);
 //
 //							listClone.add(e);
-//							if (i++ > 5) {
+//							if (i > 5) {
 //								break;// TODO timeout!
 //							}
 //						}
 //						ec.setEntries(listClone);
-//						exchange.getIn().setBody(ec,
-//								EarthquakeCollection.class);
+//						exchange.getIn()
+//								.setBody(ec, EarthquakeCollection.class);
 //					}
-//				})
-//				.process(new Processor() {
+//				}).process(new Processor() {
 //					public void process(Exchange exchange) throws Exception {
 //
 //						String body = exchange.getIn().getBody(String.class);
 //						body = body.replaceAll("<\\?xml(.*)>", "");
-//						
-//						file.writeToFile(GlobalConstants.IntermediateResult+".xml",
-//								"\n" + body, false);
+//
+//						file.writeToFile(GlobalConstants.IntermediateResult_ENRICHMENT,
+//								body, false);
 //					}
-//				})
-//				.marshal(jaxb)
-//				
+//				}).marshal(jaxb)
+//
 //				// .to("file://"+GlobalConstants.IntermediateResult+"?append=false");
-//				.to("file:/Users/nils/Desktop/result.xml").delay(10000);
+//				.to("file:/Users/nils/Desktop/result.xml").delay(3000);
 //			}
 //		});
 //
@@ -166,5 +161,5 @@ public class Driver {
 //	protected static void syso(Object string) {
 //		System.out.println(string);
 //
-//	}
+	}
 }

@@ -8,14 +8,11 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-
-@XmlRootElement(name = "parts", namespace="")
+@XmlRootElement(name = "earthparts", namespace = "")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class EarthPartCollection {
 
-	
-	
-	@XmlElement(name = "part", namespace="")
+	@XmlElement(name = "earthpart", namespace = "")
 	private List<Earthpart> earthparts = new ArrayList<Earthpart>();
 
 	public EarthPartCollection() {
@@ -29,24 +26,25 @@ public class EarthPartCollection {
 		this.earthparts.add(part);
 	}
 
-
-
-	//	@XmlElement(name = "Earthpart")
-//	@XmlElementWrapper(name = "Earthparts")
+	// @XmlElement(name = "Earthpart")
+	// @XmlElementWrapper(name = "Earthparts")
 	public List<Earthpart> getEarthparts() {
 		return earthparts;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "EarthPartCollection [earthparts=" + earthparts + "]";
+		return "\n\tEarthPartCollection [earthparts=" + earthparts + "]";
 	}
 
 	/**
-	 * @param earthparts the earthparts to set
+	 * @param earthparts
+	 *            the earthparts to set
 	 */
 	public void setEarthparts(List<Earthpart> earthparts) {
 		this.earthparts = earthparts;

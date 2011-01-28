@@ -19,8 +19,6 @@ public class RestRouter extends RouteBuilder {
 	@Override
 	public void configure() throws Exception {
 
-		
-		
 		String name = RestServiceImpl.class.getName();
 		from("cxfrs://http://localhost:9000?resourceClasses=" + name).process(
 				new Processor() {
@@ -30,9 +28,9 @@ public class RestRouter extends RouteBuilder {
 						Message inMessage = exchange.getIn();
 						String operationName = inMessage.getHeader(
 								CxfConstants.OPERATION_NAME, String.class);
-//						syso("the operation name is: " + operationName);
-//						String httpMethod = inMessage.getHeader(
-//								Exchange.HTTP_METHOD, String.class);
+						// syso("the operation name is: " + operationName);
+						// String httpMethod = inMessage.getHeader(
+						// Exchange.HTTP_METHOD, String.class);
 						// assertEquals("Get a wrong http method", "GET",
 						// httpMethod);
 						String path = inMessage.getHeader(Exchange.HTTP_PATH,

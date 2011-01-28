@@ -4,6 +4,9 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import edu.fhb.softarch.GlobalConstants;
+import edu.fhb.softarch.medialib.model.Earthquake;
+
 @XmlRootElement(namespace = "xlink")
 public class EarthquakeXLink {
 
@@ -16,16 +19,16 @@ public class EarthquakeXLink {
 	@XmlAttribute(namespace = "http://www.w3.org/1999/xlink")
 	private String show = "new";
 
-	@XmlElement(namespace = "")
-	private String name;
+	@XmlAttribute(namespace = "")
+	private String title = "";
 
 	public EarthquakeXLink() {
 	}
 
-	public EarthquakeXLink(String href, String name) {
-		super();
-		this.href = href;
-		this.name = name;
+	public EarthquakeXLink(Earthquake eq) {
+		this.title = eq.getTitle();
+		this.href = GlobalConstants.HTTP_LOCALHOST_9000_MYSERVICE_EARTHQUAKE_FIND_BY_ID
+				+ eq.getId();
 	}
 
 }

@@ -11,7 +11,7 @@ import edu.fhb.softarch.medialib.model.EarthPartCollection;
 import edu.fhb.softarch.medialib.model.Earthpart;
 import edu.fhb.softarch.medialib.model.Earthquake;
 
-@Path("/myservice/")
+@Path("/earthquakeService/")
 @Produces("application/xml")
 public class RestServiceImpl {
 
@@ -29,6 +29,5 @@ public class RestServiceImpl {
 	public Earthquake getEarthquake(@PathParam("id") Integer id) {
 		return EarthquakeDao.findById(id);
 	}
-
 
 }

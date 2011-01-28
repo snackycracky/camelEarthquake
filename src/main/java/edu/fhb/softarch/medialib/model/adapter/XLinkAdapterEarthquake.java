@@ -4,17 +4,16 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 import edu.fhb.softarch.medialib.model.Earthquake;
 
-public class XLinkAdapterEarthquake extends XmlAdapter<EarthquakeXLink,Earthquake > {
+public class XLinkAdapterEarthquake extends
+		XmlAdapter<EarthquakeXLink, Earthquake> {
 
 	@Override
 	public EarthquakeXLink marshal(Earthquake arg0) throws Exception {
-		// TODO Auto-generated method stub
-		return new EarthquakeXLink("http://theUrl:9000","quaki");
+		return new EarthquakeXLink(arg0);
 	}
 
 	@Override
 	public Earthquake unmarshal(EarthquakeXLink arg0) throws Exception {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

@@ -17,26 +17,29 @@ public class EarthpartDao {
 	public static EarthPartCollection all() {
 
 		EarthquakeCollection quakeCollection = JaxBUtil.unmarshall();
-		EarthPartCollection partCollection = new EarthPartCollection();
 		List<Earthpart> partList = new ArrayList<Earthpart>();
 		Set<String> distinctCountrys = new HashSet<String>();
-		
+
 		for (Earthquake iterable_element : quakeCollection.getEntries()) {
 			distinctCountrys.add(iterable_element.getCounrty());
 		}
-		
+
 		List<Earthquake> tmpList = new ArrayList<Earthquake>();
-		for(String country : distinctCountrys){
-			
+		for (String country : distinctCountrys) {
+
 			for (Earthquake iterable_element : quakeCollection.getEntries()) {
-				if(iterable_element.getCounrty().equals(country)){
+				if (iterable_element.getCounrty().equals(country)) {
 					tmpList.add(iterable_element);
 				}
 			}
-			partList.add(new Earthpart(country, new EarthquakeCollection(tmpList)));//
+			partList.add(new Earthpart(country, new EarthquakeCollection(
+					tmpList)));
+			tmpList = new ArrayList<Earthquake>();
 		}
+		
+		EarthPartCollection partCollection = new EarthPartCollection();
 		partCollection.setEarthparts(partList);
-		System.out.println("----------------->collection:"+partCollection);
-		return partCollection;		
+		System.out.println("----------------->collection:" + partCollection);
+		return partCollection;
 	}
 }

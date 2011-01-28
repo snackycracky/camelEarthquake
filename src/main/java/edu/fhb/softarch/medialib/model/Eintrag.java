@@ -5,11 +5,11 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement( namespace="",name="eintrag")
+@XmlRootElement(namespace = "", name = "earthquake")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Eintrag {
 
-	@XmlElement 
+	@XmlElement
 	private String title;
 	@XmlElement
 	private Float size;
@@ -19,9 +19,10 @@ public class Eintrag {
 	private String location;
 	@XmlElement
 	private String weather;
-	
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

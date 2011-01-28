@@ -17,7 +17,7 @@ public class JaxBUtil {
 			jaxbContext = JAXBContext.newInstance(EarthquakeCollection.class);
 
 			FileInputStream xml = new FileInputStream(
-					GlobalConstants.IntermediateResult);
+					GlobalConstants.IntermediateResult_ENRICHMENT);
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
 			EarthquakeCollection c = (EarthquakeCollection) unmarshaller
