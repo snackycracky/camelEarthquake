@@ -37,19 +37,17 @@ public class InputRouter extends RouteBuilder {
 				.setHeader("visited", constant(true))
 				.to("xslt:data/xsl/transformation2.xsl").to("direct:start")
 				.delay(1000);
- 
+
 		from("direct:start")
 				.aggregate(header("visited"), new MyAggregationStrategy())
 				// .enrich("direct:enrichUri", new
 				// MyEnrichAggregationStrategy())
-				.completionSize(2)
-				.completionTimeout(3000)
-				.delay(3000)
+				.completionSize(2).completionTimeout(3000).delay(3000)
 				.to("direct:filterBiggestEarthquakes")
 				.to("direct:UnmarshallMergedSources");
 
-		from("direct:UnmarshallMergedSources")
-				.unmarshal(jaxb).process(new Processor() {
+		from("direct:UnmarshallMergedSources").unmarshal(jaxb)
+				.process(new Processor() {
 					public void process(Exchange exchange) throws Exception {
 						EarthquakeCollection ec = exchange.getIn().getBody(
 								EarthquakeCollection.class);
@@ -70,71 +68,59 @@ public class InputRouter extends RouteBuilder {
 								.setBody(ec, EarthquakeCollection.class);
 					}
 				}).process(new Processor() {
-					public void process(Exchange exchange) throws Exception { 
+					public void process(Exchange exchange) throws Exception {
 
 						String body = exchange.getIn().getBody(String.class);
 						body = body.replaceAll("<\\?xml(.*)>", "");
 
-						file.writeToFile(GlobalConstants.IntermediateResult_ENRICHMENT,
+						file.writeToFile(
+								GlobalConstants.IntermediateResult_ENRICHMENT,
 								body, false);
 					}
 				}).marshal(jaxb)
-
 				// .to("file://"+GlobalConstants.IntermediateResult+"?append=false");
 				.to("file:/Users/nils/Desktop/result.xml").delay(3000);
 
 		from("direct:filterBiggestEarthquakes")
-//		from("file:/Users/nils/Desktop/driverInput?noop=true")
-						.split(xpath("/earthquakes/earthquake[size>5.4]"))
-						.setHeader("splitted", constant(true))
-						.aggregate(header("splitted"),
-								new AnotherAggregationStrategy())
-						.completionInterval(2000)
-						
-						.process(new Processor() {
+				.split(xpath("/earthquakes/earthquake[size>5.4]"))
+				.setHeader("splitted", constant(true))
+				.aggregate(header("splitted"), new AnotherAggregationStrategy())
+				.completionInterval(2000)
+				.process(new Processor() {
+					public void process(Exchange exchange) throws Exception {
+						String body = exchange.getIn().getBody(String.class);
+						body = "<earthquakes>" + body + "</earthquakes>";
+						exchange.getIn().setBody(body, String.class);
+					}
+				})
+				.unmarshal(jaxb)
+				.process(new Processor() {
 
-							public void process(Exchange exchange)
-									throws Exception {
-								String body = exchange.getIn().getBody(
-										String.class);
+					public void process(Exchange exchange) throws Exception {
+						EarthquakeCollection ec = exchange.getIn().getBody(
+								EarthquakeCollection.class);
 
-								body = "<earthquakes>" + body
-										+ "</earthquakes>";
+						String emailBody = "<b>Notification - Heavy Earthquakes</b><p/>"
+								+ "<ul>";
 
-								exchange.getIn().setBody(body, String.class);
+						for (Earthquake e : ec.getEntries()) {
+							emailBody += "<li><a href=\""
+									+ GlobalConstants.PROTOCOL_HOST
+									+ GlobalConstants.REST_SERVICE_RELATIVE_PATH
+									+ e.getId() + "\">" + e.getTitle()
+									+ " - M " + e.getSize() + "</a>" + "</li>";
+						}
 
-							}
-						})
-						.unmarshal(jaxb).process(new Processor() {
-
-							public void process(Exchange exchange)
-									throws Exception {
-								EarthquakeCollection ec = exchange.getIn()
-										.getBody(EarthquakeCollection.class);
-
-								String emailBody = "<b>Notification - Heavy Earthquakes</b><p/>"
-										+ "<ul>";
-
-								for (Earthquake e : ec.getEntries()) {
-									emailBody += "<li><a href=\""
-											+ GlobalConstants.PROTOCOL_HOST
-											+ GlobalConstants.REST_SERVICE_RELATIVE_PATH
-											+ e.getId() + "\">" + e.getTitle()
-											+ " - M " + e.getSize() + "</a>"
-											+ "</li>";
-								}
-
-								emailBody += "</ul>";
-								System.out.println(emailBody);
-								exchange.getIn().setBody(emailBody,
-										String.class);
-							}
-						})
-						.to("smtps://camelfhb@smtp.gmail.com?password=camelfhb31&to=camelfhb@googlemail.com").delay(10000);
-//						.to("direct:filterBiggestEarthquakes")
-//						.to("file:/Users/nils/Desktop/true").delay(1000)
-//						.to("smtps://camelfhb@smtp.gmail.com?password=camelfhb31&to=camelfhb@googlemail.com&contentType=text/html");
-		
+						emailBody += "</ul>";
+						System.out.println(emailBody);
+						exchange.getIn().setBody(emailBody, String.class);
+					}
+				})
+				.to("smtps://camelfhb@smtp.gmail.com?password=camelfhb31&to=camelfhb@googlemail.com")
+				.delay(120000);
+		// .to("direct:filterBiggestEarthquakes")
+		// .to("file:/Users/nils/Desktop/true").delay(1000)
+		// .to("smtps://camelfhb@smtp.gmail.com?password=camelfhb31&to=camelfhb@googlemail.com&contentType=text/html");
 
 		Thread.sleep(5000);
 	}
