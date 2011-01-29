@@ -48,8 +48,6 @@ public class InputRouter extends RouteBuilder {
 				.to("direct:filterBiggestEarthquakes")
 				.to("direct:UnmarshallMergedSources");
 
-		Namespaces ns = new Namespaces("",
-				HTTP_WWW_W3_ORG_2003_01_GEO_WGS84_POS);
 		from("direct:UnmarshallMergedSources")
 				.unmarshal(jaxb).process(new Processor() {
 					public void process(Exchange exchange) throws Exception {
@@ -85,24 +83,59 @@ public class InputRouter extends RouteBuilder {
 				// .to("file://"+GlobalConstants.IntermediateResult+"?append=false");
 				.to("file:/Users/nils/Desktop/result.xml").delay(3000);
 
-		from("direct:filterBiggestEarthquakes").delay(3000).filter()
-				.xpath("/earthquakes/earthquake/size/text()>5.5")//
-				.to("direct:NotifyByEmail").process(new Processor() {
-					public void process(Exchange exchange) throws Exception {
-						// System.out.println(exchange.getIn());
-					}
-				});
-		from("direct:NotifyByEmail")
-				.to("smtps://camelfhb@smtp.gmail.com?password=camelfhb31&to=camelfhb@googlemail.com")
-				.process(new Processor() {
-					public void process(Exchange exchange) throws Exception {
-						// EintragCollection ec = exchange.getIn().getBody(
-						// EintragCollection.class);
-					}
-				}).delay(3000);
-		//
+		from("direct:filterBiggestEarthquakes")
+//		from("file:/Users/nils/Desktop/driverInput?noop=true")
+						.split(xpath("/earthquakes/earthquake[size>5.4]"))
+						.setHeader("splitted", constant(true))
+						.aggregate(header("splitted"),
+								new AnotherAggregationStrategy())
+						.completionInterval(2000)
+						
+						.process(new Processor() {
+
+							public void process(Exchange exchange)
+									throws Exception {
+								String body = exchange.getIn().getBody(
+										String.class);
+
+								body = "<earthquakes>" + body
+										+ "</earthquakes>";
+
+								exchange.getIn().setBody(body, String.class);
+
+							}
+						})
+						.unmarshal(jaxb).process(new Processor() {
+
+							public void process(Exchange exchange)
+									throws Exception {
+								EarthquakeCollection ec = exchange.getIn()
+										.getBody(EarthquakeCollection.class);
+
+								String emailBody = "<b>Notification - Heavy Earthquakes</b><p/>"
+										+ "<ul>";
+
+								for (Earthquake e : ec.getEntries()) {
+									emailBody += "<li><a href=\""
+											+ GlobalConstants.PROTOCOL_HOST
+											+ GlobalConstants.REST_SERVICE_RELATIVE_PATH
+											+ e.getId() + "\">" + e.getTitle()
+											+ " - M " + e.getSize() + "</a>"
+											+ "</li>";
+								}
+
+								emailBody += "</ul>";
+								System.out.println(emailBody);
+								exchange.getIn().setBody(emailBody,
+										String.class);
+							}
+						})
+						.to("smtps://camelfhb@smtp.gmail.com?password=camelfhb31&to=camelfhb@googlemail.com").delay(10000);
+//						.to("direct:filterBiggestEarthquakes")
+//						.to("file:/Users/nils/Desktop/true").delay(1000)
+//						.to("smtps://camelfhb@smtp.gmail.com?password=camelfhb31&to=camelfhb@googlemail.com&contentType=text/html");
+		
 
 		Thread.sleep(5000);
 	}
-
 }

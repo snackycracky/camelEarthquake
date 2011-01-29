@@ -27,7 +27,7 @@ public class EarthquakeXLink {
 
 	public EarthquakeXLink(Earthquake eq) {
 		this.title = eq.getTitle();
-		this.href = GlobalConstants.HTTP_LOCALHOST_9000_MYSERVICE_EARTHQUAKE_FIND_BY_ID
+		this.href = GlobalConstants.REST_SERVICE_RELATIVE_PATH
 				+ eq.getId();
 	}
 
