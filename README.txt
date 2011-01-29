@@ -20,7 +20,7 @@ featuresBoot=config,activemq-broker,camel,camel-http,camel-jaxb,jbi-cluster,war,
 
 4.start fuse with downloadedFuse/bin/servicemix
 
-5. on the karaf shell type: "osgi:install -s mvn:edu.fhb.softarch.medialib/servicemixTest"
+5. on the karaf shell type: "osgi:install -s mvn:edu.fhb.sysint.camel.medialib/servicemixTest"
 
 6. browse to http://localhost:9000/myservice/Earthparts
 

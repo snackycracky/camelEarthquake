@@ -1,4 +1,4 @@
-package edu.fhb.softarch.medialib.model;
+package edu.fhb.sysint.camel.model;
 
 import java.util.ArrayList;
 import java.util.List;

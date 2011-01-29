@@ -1,12 +1,12 @@
-package edu.fhb.softarch.medialib;
+package edu.fhb.sysint.camel;
 
 import java.util.ArrayList;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 
-import edu.fhb.softarch.medialib.model.Earthquake;
-import edu.fhb.softarch.medialib.model.EarthquakeCollection;
+import edu.fhb.sysint.camel.model.Earthquake;
+import edu.fhb.sysint.camel.model.EarthquakeCollection;
 
 final class EnrichmentProcessor implements Processor {
 	

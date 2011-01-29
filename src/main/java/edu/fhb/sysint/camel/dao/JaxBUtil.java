@@ -1,4 +1,4 @@
-package edu.fhb.softarch.medialib.dao;
+package edu.fhb.sysint.camel.dao;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -7,8 +7,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
-import edu.fhb.softarch.GlobalConstants;
-import edu.fhb.softarch.medialib.model.EarthquakeCollection;
+import edu.fhb.sysint.camel.GlobalConstants;
+import edu.fhb.sysint.camel.model.EarthquakeCollection;
 
 public class JaxBUtil {
 	public static EarthquakeCollection unmarshall() {

@@ -26,7 +26,7 @@
 	<import resource="classpath:META-INF/cxf/cxf-extension-http-jetty.xml" />
 
 	<camelContext trace="true" xmlns="http://camel.apache.org/schema/spring">
-		<package>edu.fhb.softarch.medialib</package>
+		<package>edu.fhb.sysint.camel</package>
 	</camelContext>
 
 </beans>

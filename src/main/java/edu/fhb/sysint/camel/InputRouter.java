@@ -1,4 +1,4 @@
-package edu.fhb.softarch.medialib;
+package edu.fhb.sysint.camel;
 
 import java.io.File;
 
@@ -9,9 +9,8 @@ import org.apache.camel.builder.xml.Namespaces;
 import org.apache.camel.converter.jaxb.JaxbDataFormat;
 import org.apache.camel.spi.DataFormat;
 
-import edu.fhb.softarch.GlobalConstants;
-import edu.fhb.softarch.medialib.model.Earthquake;
-import edu.fhb.softarch.medialib.model.EarthquakeCollection;
+import edu.fhb.sysint.camel.model.Earthquake;
+import edu.fhb.sysint.camel.model.EarthquakeCollection;
 
 public class InputRouter extends RouteBuilder {
 	private static final String HTTP_WWW_W3_ORG_2003_01_GEO_WGS84_POS = "http://www.w3.org/2003/01/geo/wgs84_pos";
@@ -21,14 +20,16 @@ public class InputRouter extends RouteBuilder {
 
 		final CommonUtils file = new CommonUtils();
 		final DataFormat jaxb = new JaxbDataFormat(
-				"edu.fhb.softarch.medialib.model");
+				"edu.fhb.sysint.camel.model");
 
 		from(//rss:
 		"http://geofon.gfz-potsdam.de/db/eqinfo.php?fmt=rss&splitEntries=false")//.marshal().rss()
+		.log("retrieve")
 		.to("direct:start");
 
 		from(//rss:
 		"http://earthquake.usgs.gov/eqcenter/catalogs/eqs1day-M2.5.xml?fmt=rss&splitEntries=false")//.marshal().rss()
+		.log("retrieve")
 		.to("direct:start");
 		
 		from("direct:start")

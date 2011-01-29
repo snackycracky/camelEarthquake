@@ -1,5 +1,5 @@
 // Paket
-package edu.fhb.softarch.medialib;
+package edu.fhb.sysint.camel;
 
 // Includes
 import java.io.BufferedReader;

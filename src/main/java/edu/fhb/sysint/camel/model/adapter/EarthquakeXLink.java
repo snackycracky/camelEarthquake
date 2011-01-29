@@ -1,11 +1,11 @@
-package edu.fhb.softarch.medialib.model.adapter;
+package edu.fhb.sysint.camel.model.adapter;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import edu.fhb.softarch.GlobalConstants;
-import edu.fhb.softarch.medialib.model.Earthquake;
+import edu.fhb.sysint.camel.GlobalConstants;
+import edu.fhb.sysint.camel.model.Earthquake;
 
 @XmlRootElement(namespace = "xlink")
 public class EarthquakeXLink {

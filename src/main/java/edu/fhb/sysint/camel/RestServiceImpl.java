@@ -1,15 +1,15 @@
-package edu.fhb.softarch.medialib;
+package edu.fhb.sysint.camel;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import edu.fhb.softarch.medialib.dao.EarthpartDao;
-import edu.fhb.softarch.medialib.dao.EarthquakeDao;
-import edu.fhb.softarch.medialib.model.EarthPartCollection;
-import edu.fhb.softarch.medialib.model.Earthpart;
-import edu.fhb.softarch.medialib.model.Earthquake;
+import edu.fhb.sysint.camel.dao.EarthpartDao;
+import edu.fhb.sysint.camel.dao.EarthquakeDao;
+import edu.fhb.sysint.camel.model.EarthPartCollection;
+import edu.fhb.sysint.camel.model.Earthpart;
+import edu.fhb.sysint.camel.model.Earthquake;
 
 @Path("/earthquakeService/")
 @Produces("application/xml")

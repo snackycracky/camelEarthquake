@@ -1,4 +1,4 @@
-package edu.fhb.softarch.medialib.dao;
+package edu.fhb.sysint.camel.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import edu.fhb.softarch.medialib.model.EarthPartCollection;
-import edu.fhb.softarch.medialib.model.Earthpart;
-import edu.fhb.softarch.medialib.model.Earthquake;
-import edu.fhb.softarch.medialib.model.EarthquakeCollection;
+import edu.fhb.sysint.camel.model.EarthPartCollection;
+import edu.fhb.sysint.camel.model.Earthpart;
+import edu.fhb.sysint.camel.model.Earthquake;
+import edu.fhb.sysint.camel.model.EarthquakeCollection;
 
 public class EarthpartDao {
 

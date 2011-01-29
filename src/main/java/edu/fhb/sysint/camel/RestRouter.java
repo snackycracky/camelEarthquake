@@ -1,4 +1,4 @@
-package edu.fhb.softarch.medialib;
+package edu.fhb.sysint.camel;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
@@ -9,10 +9,10 @@ import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.cxf.CxfConstants;
 
-import edu.fhb.softarch.medialib.dao.EarthpartDao;
-import edu.fhb.softarch.medialib.dao.EarthquakeDao;
-import edu.fhb.softarch.medialib.model.Earthpart;
-import edu.fhb.softarch.medialib.model.Earthquake;
+import edu.fhb.sysint.camel.dao.EarthpartDao;
+import edu.fhb.sysint.camel.dao.EarthquakeDao;
+import edu.fhb.sysint.camel.model.Earthpart;
+import edu.fhb.sysint.camel.model.Earthquake;
 
 public class RestRouter extends RouteBuilder {
 

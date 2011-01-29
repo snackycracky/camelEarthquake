@@ -1,4 +1,4 @@
-package edu.fhb.softarch.medialib;
+package edu.fhb.sysint.camel;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -18,13 +18,12 @@ import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.camel.spi.DataFormat;
 import org.springframework.util.FileSystemUtils;
 
-import edu.fhb.softarch.GlobalConstants;
-import edu.fhb.softarch.medialib.dao.EarthpartDao;
-import edu.fhb.softarch.medialib.dao.EarthquakeDao;
-import edu.fhb.softarch.medialib.model.Earthpart;
-import edu.fhb.softarch.medialib.model.Earthquake;
-import edu.fhb.softarch.medialib.model.EarthquakeCollection;
-import edu.fhb.softarch.medialib.model.EintragCollection;
+import edu.fhb.sysint.camel.dao.EarthpartDao;
+import edu.fhb.sysint.camel.dao.EarthquakeDao;
+import edu.fhb.sysint.camel.model.Earthpart;
+import edu.fhb.sysint.camel.model.Earthquake;
+import edu.fhb.sysint.camel.model.EarthquakeCollection;
+import edu.fhb.sysint.camel.model.EintragCollection;
 
 public class Driver {
 	
@@ -35,7 +34,7 @@ public class Driver {
 
 		final CommonUtils file = new CommonUtils();
 		final DataFormat jaxb = new JaxbDataFormat(
-				"edu.fhb.softarch.medialib.model");
+				"edu.fhb.sysint.camel.model");
 
 //		context.addRoutes(new RouteBuilder() {
 //

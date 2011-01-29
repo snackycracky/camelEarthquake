@@ -1,6 +1,6 @@
-package edu.fhb.softarch.medialib.dao;
+package edu.fhb.sysint.camel.dao;
 
-import edu.fhb.softarch.medialib.model.Earthquake;
+import edu.fhb.sysint.camel.model.Earthquake;
 
 public class EarthquakeDao {
 	public static Earthquake findById(Integer id) {

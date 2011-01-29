@@ -1,4 +1,4 @@
-package edu.fhb.softarch.medialib.model;
+package edu.fhb.sysint.camel.model;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import edu.fhb.softarch.medialib.model.adapter.XLinkAdapterEarthquake;
+import edu.fhb.sysint.camel.model.adapter.XLinkAdapterEarthquake;
 
 @XmlRootElement(name = "earthpart")
 @XmlAccessorType(XmlAccessType.FIELD)

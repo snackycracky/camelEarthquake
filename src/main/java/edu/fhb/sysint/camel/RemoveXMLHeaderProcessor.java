@@ -1,9 +1,8 @@
-package edu.fhb.softarch.medialib;
+package edu.fhb.sysint.camel;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 
-import edu.fhb.softarch.GlobalConstants;
 
 class RemoveXMLHeaderProcessor implements Processor {
 	

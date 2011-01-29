@@ -15,12 +15,12 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>edu.fhb.softarch.medialib</groupId>
-	<artifactId>servicemixTest</artifactId>
+	<groupId>edu.fhb.sysint.camel</groupId>
+	<artifactId>ApacheCamelEarthquakeService</artifactId>
 	<packaging>bundle</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>A Camel OSGi Service Unit</name>
-	<url>http://www.myorganization.org</url>
+	<url>http://blog.srvme.de</url>
 
 	<dependencies>
 		<dependency>
@@ -92,7 +92,7 @@
 				<configuration>
 					<instructions>
 						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
-						<Private-Package>edu.fhb.softarch.medialib</Private-Package>
+						<Private-Package>edu.fhb.sysint.camel</Private-Package>
 						<Import-Package>
 							*,
 							META-INF.cxf,

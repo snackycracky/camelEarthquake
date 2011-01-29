@@ -1,4 +1,4 @@
-package edu.fhb.softarch.medialib.model;
+package edu.fhb.sysint.camel.model;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

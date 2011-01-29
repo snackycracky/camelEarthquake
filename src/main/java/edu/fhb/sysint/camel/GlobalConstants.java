@@ -1,4 +1,4 @@
-package edu.fhb.softarch;
+package edu.fhb.sysint.camel;
 
 public final class GlobalConstants {
 
