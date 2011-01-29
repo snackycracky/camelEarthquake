@@ -1,0 +1,64 @@
+% This file was created with JabRef 2.6.
+% Encoding: MacRoman
+
+@BOOK{budinsky2003eclipse,
+  title = {{Eclipse modeling framework}},
+  publisher = {Pearson Education},
+  year = {2003},
+  author = {Budinsky, F. and Brodsky, S.A. and Merks, E.},
+  isbn = {0131425420}
+}
+
+@ARTICLE{koehler2006visual,
+  author = {K{\\"o}hler, C.},
+  title = {{A Visual Model Transformation Environment for the Eclipse Modeling
+	Framework}},
+  year = {2006}
+}
+
+@CONFERENCE{naslavsky2007towards,
+  author = {Naslavsky, L. and Ziv, H. and Richardson, D.J.},
+  title = {{Towards leveraging model transformation to support model-based testing}},
+  booktitle = {Proceedings of the twenty-second IEEE/ACM international conference
+	on Automated software engineering},
+  year = {2007},
+  pages = {509--512},
+  organization = {ACM}
+}
+
+@ARTICLE{steinberg2008fundamentals,
+  author = {Steinberg, D.},
+  title = {{Fundamentals of the eclipse modeling framework}},
+  journal = {Eclipse Foundation, editor, eclipsecon},
+  year = {2008},
+  volume = {2008}
+}
+
+@ELECTRONIC{em,
+  title = {Eclipse Modeling Project},
+  url = {http://www.eclipse.org/modeling/},
+  owner = {nils},
+  timestamp = {2010.12.15}
+}
+
+@ELECTRONIC{mdtocl,
+  title = {Model Development Tools (MDT) - OCL},
+  url = {http://www.eclipse.org/modeling/mdt/?project=ocl},
+  owner = {nils},
+  timestamp = {2010.12.14}
+}
+
+@ELECTRONIC{ms2,
+  title = {EMF/New and Noteworthy/Helios - Milestone 2},
+  url = {http://wiki.eclipse.org/EMF/New_and_Noteworthy/Helios#Support_for_Validation_Delegates},
+  owner = {nils},
+  timestamp = {2010.12.14}
+}
+
+@ELECTRONIC{nexj,
+  title = {NexJ Scheme Adapter for Ecore},
+  url = {http://nexj-scheme.org/adapter_for_ecore.html},
+  owner = {nils},
+  timestamp = {2010.12.14}
+}
+

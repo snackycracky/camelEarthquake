@@ -1,0 +1,149 @@
+
+
+\documentclass[11pt,english,ngerman, headsepline]{scrreprt}
+\usepackage{lmodern}
+\renewcommand{\sfdefault}{lmss}
+\renewcommand{\ttdefault}{lmtt}
+\usepackage[T1]{fontenc}
+
+\usepackage{listings}
+
+\usepackage[utf8]{inputenc} \usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=3cm,rmargin=2.75cm,headheight=1cm,headsep=0.666cm,footskip=1cm}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+\setlength{\parskip}{\medskipamount}
+\setlength{\parindent}{0pt}
+\usepackage{babel}
+
+\usepackage{verbatim} 
+\usepackage{float}  
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage[square,sort,numbers]{natbib}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[xindy,toc]{glossaries}
+
+
+
+\input{formating/formating.tex}
+
+\parindent 0pt
+
+
+\begin{document}
+
+
+\input{deckblatt/deckblatt.tex}
+
+\selectlanguage{ngerman}%
+\tableofcontents{}
+
+\pagestyle{scrheadings}    %Kopfzeile ein
+
+
+%==========================================================================
+% DOCUMENT START 
+%==========================================================================
+
+\chapter{Introduction / Motivation / Project}
+ 
+ Systemintegration is the part of a software architectur. It helps to connect
+ components or subsystems together. Certain patterns are used in the industry
+ today. Using and learning EIP (``Enterprise Integration Pattterns'') with
+ Apache Camel is the goal of this Project.\\
+ 
+ The Example for this project is all about earthquake data from around the
+ world. The Application is able to read earthquake data from various rss Feeds
+ and processes it. During the processing the data will be in form of XML and
+ Java Objects. The data will be enriched, splitted, sorted, aggregated,
+ normalized, marshalled umarshalled and finally provided again in form of a
+ restful service.\\
+ 
+ The specified task is as follows:
+ 
+ \begin{enumerate}
+   
+ 
+ \item Read Earthquake Data continously from those two RSS Streams
+ \begin{itemize}
+  	\item \url{http://geofon.gfz-potsdam.de/db/eqinfo.php?fmt=rss}
+  	\item \url{http://earthquake.usgs.gov/eqcenter/catalogs/eqs1day-M2.5.xml}
+  \end{itemize}
+  \item enrich this data with other related information like the weather in this
+  area at this time. Data can be from here: \url{http://www.programmableweb.com}.
+  \item sort the earthquakes by the earthparts where they appear
+  \item if the earthquake has a strength of more than ``M 5.5'' than send an
+  formated warning email to an email adress.
+  \item  provide this data via a Restful interface in form of a list of the
+  earthparts with an xlink to detailed information of the earthquakes.
+  
+ \end{enumerate}
+
+\chapter{Information Collection and Normalization}
+
+
+\lstinputlisting[caption={Aggregator},
+label={code:countRoomsLatexsp},style=default]{code/inputstreams.java}
+
+
+\chapter{Aggregating Information Sources} 
+\begin{quote}
+The Aggregator is a special filter that recieves a strem of messages an
+didentifies messages that are correlated. Once a complete set of messages has
+been recied, the Aggregator collects information from each correlated message
+and publishes a single, aggregated message to the output channel for further
+processing. \cite{hohpe2003enterprise}
+\end{quote}
+
+  \begin{figure}[h!]
+	\begin{center}
+	\includegraphics[width=0.6\textwidth]{pics/Aggregator.jpg}
+	\end{center}
+	\caption{Aggregator Pattern \cite{hohpe2003enterprise}}
+	\label{utilityTree} 
+   \end{figure}
+
+
+Camel provides a method named $aggregate$ with two parameters, first the
+identifier of the messages to aggregate (the message header) and second the
+strategy (as a Object: $SpecialAggregationStrategy$ which implements\\
+$org.apache.camel.processor.aggregate.AggregationStrategy$).
+ s
+
+
+
+
+\chapter{Normierung der Daten auf eine einheitliches Format}
+\chapter{Anreicherung der Daten mit zusaetzlichen Informationen}
+\chapter{Sortierung und speicherung der Daten}
+\chapter{Emailbenachrichtigung}
+\chapter{REST Schnittstelle zu den Daten}
+\section{Liste der Erdbeben je Erdteil mit xlink}
+\section{Detailinformationen zu einem Erdbeben}
+
+%\chapter{verwendete EAI-Pattern}
+
+
+
+ 
+%==========================================================================
+% DOCUMENT END 
+%==========================================================================
+
+\bibliographystyle{alphadin}
+\clearpage\addcontentsline{toc}{chapter}{\bibname}\bibliography{jabref}
+
+
+\appendix
+\renewcommand{\theequation}{A-\arabic{equation}}
+
+\setcounter{equation}{0}  % reset counter \chapter*{Anhang}  % use *-form to
+
+
+
+
+\listoffigures
+\end{document}

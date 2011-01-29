@@ -1,0 +1,145 @@
+\setstretch{1.4}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage[unicode=true, 
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=true,bookmarksopenlevel=2,
+ breaklinks=false,pdfborder={0 0 0},backref=false,colorlinks=false]
+ {hyperref}
+\hypersetup{pdftitle={Vergleich und Evaluation zwischen modernen und traditionellen Datenbankkonzepten 
+unter den Gesichtspunkten Skalierung, Abfragem�glichkeit und Konsistenz.},
+ pdfauthor={Nils M. Petersohn}}
+ 
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\providecommand{\LyX}{L\kern-.1667em\lower.25em\hbox{Y}\kern-.125emX\@}
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\newenvironment{lyxcode}
+{\par\begin{list}{}{
+\setlength{\rightmargin}{\leftmargin}
+\setlength{\listparindent}{0pt}% needed for AMS classes
+\raggedright
+\setlength{\itemsep}{0pt}
+\setlength{\parsep}{0pt}
+\normalfont\ttfamily}%
+ \item[]}
+{\end{list}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+%% Flexibles Seitenlayout
+\usepackage[automark]{scrpage2}
+
+%% Mehrspaltenlayout ermöglichen
+\usepackage{multicol}
+
+%% Unterst\"utzung f\"ur Farben
+\usepackage{color}
+
+%% Schönere Tabellen
+\usepackage{booktabs, longtable}
+
+%% Schönerer Blocksatz
+\usepackage{microtype}
+%% Mehr Platz zwischen Überschrift und Tabelle
+\newcommand{\@ldtable}{}
+\let\@ldtable\table
+\renewcommand{\table}{ %
+    \setlength{\@tempdima}{\abovecaptionskip} %
+    \setlength{\abovecaptionskip}{\belowcaptionskip} %
+    \setlength{\belowcaptionskip}{\@tempdima} %
+    \@ldtable %
+}
+
+%% Verschiedene Symbole und Zeichen wie (c), ¤
+\usepackage{textcomp}
+
+%% Fehlerkorrektur f\"ur Marginalien
+\usepackage{fixltx2e }%,mparhack
+
+%% Deutsche Kurzfassung und englisches Abstract auf eine Seite
+\renewenvironment{abstract}{
+    \@beginparpenalty\@lowpenalty
+        \begin{center}
+            \normalfont\sectfont\nobreak\abstractname
+        \end{center}
+    \@endparpenalty\@M
+}{
+    \par
+}
+
+%% Alle Seiten vor dem Inhaltsverzeichnis sind römisch nummeriert
+\pagenumbering{roman}
+\let\myTOC\tableofcontents
+\renewcommand\tableofcontents{
+    \begin{spacing}{1.1}
+    \myTOC
+    \end{spacing}
+    \clearpage
+    \pagenumbering{arabic}
+}
+
+%% Kopfzeile um Logo erg\"anzen
+\clearscrheadfoot
+\ohead{\\\headmark}
+\ihead{\includegraphics[scale=0.25]{pics/FH-Logo-only-gray}}%\pagemark}
+\ofoot[\pagemark]{\pagemark}
+
+%% Randnotizen anpassen
+\setlength{\marginparwidth}{22mm}
+\let \oldmarginpar = \marginpar
+\renewcommand{\marginpar}[1]{%
+    \-\oldmarginpar[\raggedleft\footnotesize\sf #1]%
+        {\raggedright\footnotesize\sf #1%
+    }}
+
+%% Zitate am Kapitelanfang
+%\usepackage{epigraph}
+%\setlength{\epigraphwidth}{9cm}
+
+%% Code-Block-Formatierung
+\lstdefinestyle{default}{ %
+    backgroundcolor={\color[rgb]{0.95,0.95,0.95}}, %
+    basicstyle={\small\ttfamily}, %
+    breaklines=true, %
+    frame=l, %
+    language={[Sharp]C}, %
+    lineskip=-0.1pt, %
+    numbers=left, %
+    rulecolor={\color[rgb]{0.5,0.5,0.5}}, %
+    xleftmargin={0.75cm}, %
+    xrightmargin={0cm} %
+}
+\lstdefinelanguage{JavaScript} {
+	morekeywords={
+		break,const,continue,delete,do,while,export,for,in,function,
+		if,else,import,in,instanceOf,label,let,new,return,switch,this,
+		throw,try,catch,typeof,var,void,with,yield
+	},
+	sensitive=false,
+	morecomment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	morestring=[b]",
+	morestring=[d]'
+}
+
+\lstset{
+	frame=tb,
+	framesep=5pt,
+	basicstyle=\footnotesize\ttfamily,
+	showstringspaces=false,
+	keywordstyle=\ttfamily\bfseries\color{CadetBlue},
+	identifierstyle=\ttfamily,
+	stringstyle=\ttfamily\color{OliveGreen},
+	commentstyle=\color{GrayBlue},
+	rulecolor=\color{Gray},
+	xleftmargin=5pt,
+	xrightmargin=5pt,
+	aboveskip=\bigskipamount,
+	belowskip=\bigskipamount
+}
+\makeatother
+
+\setlength{\parindent}{5pt} 
+\setlength{\parskip}{1ex}
