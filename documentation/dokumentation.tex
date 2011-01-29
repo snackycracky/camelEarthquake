@@ -159,14 +159,243 @@ label={aggregationstrategy.java},style=default]{code/aggregationstrategy.java}
 
 
 \chapter{Enrich Data with related Information}
+Information can be
+added to the original Message with the Message Transformation Pattern ``Content
+Enricher'' .
+
+  \begin{figure}[h!]
+	\begin{center}
+	\includegraphics[width=0.7\textwidth]{pics/DataEnricher.jpg}
+	\end{center}
+	\caption{Content Enricher Pattern \cite{hohpe2003enterprise}}
+	\label{contentEnricherPic} 
+   \end{figure}
+
+``The Content Enricher (Pic. \ref{contentEnricherPic}) uses information inside
+the incoming message to retrieve data from an external
+source.\cite{hohpe2003enterprise}''
+This is accomplished via the coordinates of the earthquake. which are used to
+retrieve area information \\
+\url{http://api.wunderground.com/auto/wui/geo/GeoLookupXML} \\and weather
+information from \url{http://www.worldweatheronline.com/feed/weather.ashx}.
+See Listing \ref{enricherCode} for the source code.
+
+\lstinputlisting[caption={Enricher},
+label={enricherCode},style=default]{code/enricher.java}
+
+The $EnrichmentProcessor$ can now work with the java instances see Listing
+\ref{conricherProcessor.java}
+
+\lstinputlisting[caption={EnrichmentProcessor},
+label={conricherProcessor.java},style=default]{code/conricherProcessor.java}
 
 
 
-\chapter{Sortierung und speicherung der Daten}
-\chapter{Emailbenachrichtigung}
-\chapter{REST Schnittstelle zu den Daten}
-\section{Liste der Erdbeben je Erdteil mit xlink}
-\section{Detailinformationen zu einem Erdbeben}
+
+
+For the most flexibility the XML Message is automatically unmarshalled to the
+specified Java objects via the JAXB Umarshaller. 
+
+\begin{itemize}
+  \item Earthpart
+  \item EarthPartCollection
+  \item EarthquakeCollection
+  \item Earthquake
+  \item EintragCollection
+  \item Weather
+  \item WeatherWrapper
+\end{itemize}
+
+This is easyliy accomplished with jaxb Annotations in the data models. For more
+information on JAXB please visit: \\
+\url{http://www.oracle.com/technetwork/articles/javase/index-140168.html}
+
+In Camel, data formats are pluggable transformers that can transform messages
+from one form to another and vice versa. Each data format is represented in
+Camel as an interface in org.apace.camel.spi.DataFormat containing two methods:
+\begin{itemize}
+  \item marshal—For marshaling a message into another form, such as
+marshaling Java objects to XML, CSV, EDI, HL7, or other well-known data
+models.
+\item unmarshal—The reverse operation which turns data from well known 
+formats back into a message.
+\end{itemize}
+You may already have realized that these two functions are
+opposites, meaning that one is capable of reversing what the other has done, as illustrated in
+figure \ref{picMarshalling}. \cite{ibsen2010camel}
+
+  \begin{figure}[h!]
+	\begin{center}
+	\includegraphics[width=0.7\textwidth]{pics/marshalling}
+	\end{center}
+	\caption{Transforming with Data Formats \cite{hohpe2003enterprise}}
+	\label{picMarshalling} 
+   \end{figure}
+
+The Marshalled State is shown in the Class Diagram (Pic \ref{modelDia.JPG}) for
+the package\\ $edu.fhb.sysint.camel.model$\\
+The marshalled state is the XML Form (Pic. \ref{picmarshalledEarthparts},
+\ref{picmarshalledEarthquake.png})
+
+ \begin{figure}[h!]
+	\begin{center}
+	\includegraphics[width=0.99\textwidth]{pics/modelDia.JPG}
+	\end{center}
+	\caption{edu.fhb.sysint.camel.model Package}
+	\label{modelDia.JPG} 
+   \end{figure}
+   
+   
+   \begin{figure}[h!]
+	\begin{center}
+	\includegraphics[width=0.99\textwidth]{pics/marshalledEarthparts}
+	\end{center}
+	\caption{marshalled Earthparts}
+	\label{picmarshalledEarthparts} 
+   \end{figure}
+   
+   
+   \begin{figure}[h!]
+	\begin{center}
+	\includegraphics[width=0.7\textwidth]{pics/marshalledEarthquake}
+	\end{center}
+	\caption{marshalled Earthquake}
+	\label{picmarshalledEarthquake.png} 
+   \end{figure}
+
+
+
+\chapter{Email Notification}
+
+If the strength of the Earthquakes are more than M 5.5 than an email
+notification must be delivered. This is implemented with Apache Camel throught
+the splitter Pattern (Pic \ref{splitter}) 
+
+
+ \begin{figure}[h!]
+	\begin{center}
+	\includegraphics[width=0.7\textwidth]{pics/Sequencer.jpg}
+	\end{center}
+	\caption{Sequencer with Splitter Pattern}
+	\label{splitter} 
+   \end{figure}
+
+
+The Source is splitted and aggregated. If The xPath evaluates to true the
+message is reformated in a human readable format and sent to the provided email
+address.
+
+\lstinputlisting[caption={Splitting Pattern},
+label={splitting.java},style=default]{code/splitting.java}
+
+
+The Resulting Email is shown in Pic \ref{EmailResult}
+
+
+ \begin{figure}[h!]
+	\begin{center}
+	\includegraphics[width=0.8\textwidth]{pics/EmailResult.jpg}
+	\end{center}
+	\caption{Email Result}
+	\label{EmailResult} 
+   \end{figure}
+
+ 
+
+
+
+
+\chapter{RESTful Service}
+
+The Mashup is provided via a REST Web Service
+(\url{http://localhost:9000/earthquakeService/})
+The provided Data is sorted by Earthparts which were determined via the
+enrichment Phase.
+Camel has the availability to establish a REST Service with the Help of the
+Apache CXF Project which works closly JAXB (marshalling/umarshalling). 
+The Rest Router (Listing \ref{rest.java} ) determines the requested URL and
+requests the DAO Layer \cite{fowler2002patterns} to send the correct response
+Data.
+
+\lstinputlisting[caption={Rest Router}, 
+label={rest.java},style=default]{code/rest.java}
+
+The CXF Endpoint is configured with the Definition class (Listing
+\ref{cxf.java})
+   
+\lstinputlisting[caption={CXF Service Definition},
+label={cxf.java},style=default]{code/cxf.java}
+
+\chapter{XLink with jaxb Adapters}
+Jaxb allows the use of the Adapter Pattern \ref{gamma1995design}. This allows to
+define special Marshalling for Objects.
+When the jaxb umarshaller gets to the Earthpart Object than the data field
+``Earthquakes'' is not umarshalled normally. 
+The Annotation @XmlJavaTypeAdapter (Listing \ref{earthpartCode.java}) Redirects that
+action to special marshalling/umarshalling methods. 
+
+\lstinputlisting[caption={Earthpart Class},
+label={earthpartCode.java},style=default]{code/earthpartCode.java}
+
+Since the Classes for marshalling this special requirement are located in an
+extra package $edu.fhb.sysint.camel.model.adapter$ it was possible to use the
+namespace mechanism at package level. 
+
+
+``Annotations that can be applied to the
+package element are referred to as package-level annotations. An annotation with
+ElementType.PACKAGE as one of its targets is a package-level annotation.
+Package-level annotations are placed in a package-info.java
+\ref{package-info.java} file. This file should contain only the package statement, preceded by annotations. When the
+compiler encounters package-info.java file, it will create a synthetic
+interface, package-name.package-info. The interface is called synthetic because
+it is introduced by the compiler and does not have a corresponding construct in
+the source code. This synthetic interface makes it possible to access
+package-level annotations at runtime.\cite{packageinfo}''
+
+
+
+\lstinputlisting[caption={package-info.java for the Adapter Package},
+label={package-info.java},style=default]{code/package-info.java}
+
+
+
+
+\chapter{Deployment Steps}
+The System is deployed via the Apache Servicemix OSGI Runtime Container.
+``Apache ServiceMix is an open source ESB (Enterprise Service Bus) that combines
+ the functionality of a Service Oriented Architecture (SOA) and an Event Driven
+ Architecture (EDA)  to create an agile, enterprise ESB.\cite{sm} ''
+ 
+The Camel Version used is ``2.4.0-fuse-02-00'' from the repository
+``\url{http://repo.fusesource.com/maven2/}''.
+
+\begin{enumerate}
+  
+\item  download fuse 4-3-0 file and unpack to ~/downloadedFuse
+\url{http://fusesource.com/product_download/fuse-esb-apache-servicemix/4-3-0-fuse-03-00/unix}
+
+\item  replace ~/downloadedFuse/etc/org.apache.karaf.features.cfg key value pair "featuresBoot=..." with
+
+featuresBoot=config,activemq-broker,camel,camel-http,camel-jaxb,jbi-cluster,war,\\
+servicemix-cxf-bc,servicemix-file,servicemix-ftp,servicemix-http,servicemix-jms,\\
+servicemix-mail,servicemix-bean,servicemix-camel,servicemix-cxf-se,servicemix-drools,\\
+servicemix-eip,servicemix-osworkflow,servicemix-quartz,servicemix-scripting,\\
+servicemix-validation,servicemix-saxon,servicemix-wsn2005,camel,camel-spring-osgi,\\
+cxf,camel-cxf,camel-jetty,web,cxf-jaxrs,camel-rss,activemq-camel,rome-osgi,camel-mail\\
+  
+\item  in the project root do ``mvn install''
+
+\item start fuse with ~/downloadedFuse/bin/servicemix
+
+\item  on the karaf shell type: ``install -s
+mvn:edu.fhb.sysint.camel/ApacheCamelEarthquakeService''
+
+\item browse to http://localhost:9000/earthquakeService/Earthparts
+
+\end{enumerate}
+
+
 
 %\chapter{verwendete EAI-Pattern}
 

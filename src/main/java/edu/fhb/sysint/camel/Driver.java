@@ -32,10 +32,10 @@ public class Driver {
 	public static void main(String args[]) throws Exception {
 		CamelContext context = new DefaultCamelContext();
 
-//		final CommonUtils file = new CommonUtils();
-//		final DataFormat jaxb = new JaxbDataFormat(
-//				"edu.fhb.sysint.camel.model");
-//
+		final CommonUtils file = new CommonUtils();
+		final DataFormat jaxb = new JaxbDataFormat(
+				"edu.fhb.sysint.camel.model");
+
 //		context.addRoutes(new RouteBuilder() {
 //
 //			public void configure() {
@@ -83,14 +83,6 @@ public class Driver {
 //					.process(new EnrichmentProcessor())
 //					.to("file:/Users/nils/Desktop/result1.xml").delay(40000);
 //			}});
-//				
-//				
-//				
-//				
-				
-				
-				
-				
 				
 				
 //				
