@@ -15,6 +15,9 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Locale;
 
+import edu.fhb.sysint.camel.dao.JaxBUtil;
+import edu.fhb.sysint.camel.model.Weather;
+
 /**
  * Zeigt einen Artikel an
  */
@@ -23,7 +26,23 @@ public class CommonUtils {
 	public CommonUtils() {
 
 	}
+	public static Weather findWeatherInfo(String location) {
+		URL url = null;
 
+		String result = null;
+		
+		String[] split = location.split(",");
+		try {
+			url = new URL(CommonUtils.findWeatherAPIUrlForCoordinates(
+					Float.parseFloat(split[0]), Float.parseFloat(split[1])));
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+		return JaxBUtil.umarshallWeather(url).getCurrent_condition();
+		
+	}
 	public static String findAdditionalInfo(String location) {
 		URL url;
 
@@ -126,5 +145,18 @@ public class CommonUtils {
 			System.out.println("FILE: Fehler");
 		}
 		return text;
+	}
+
+	public static String findWeatherAPIUrlForCoordinates(Float longitude, Float latitude) {
+
+		String url = "";
+		url += GlobalConstants.WORLDWEATHER_API_URL;
+		url += "?q="+longitude+","+latitude;
+		url += "&format=xml";
+		url += "&num_of_days=2";
+		url += "&key="+GlobalConstants.WORLDWEATHER_API_KEY;
+			
+		
+		return url;
 	}
 }

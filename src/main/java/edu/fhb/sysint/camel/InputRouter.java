@@ -1,9 +1,16 @@
 package edu.fhb.sysint.camel;
 
 import java.io.File;
+import java.util.Map;
 
+import org.apache.camel.CamelContext;
+import org.apache.camel.Consumer;
+import org.apache.camel.Endpoint;
 import org.apache.camel.Exchange;
+import org.apache.camel.ExchangePattern;
+import org.apache.camel.PollingConsumer;
 import org.apache.camel.Processor;
+import org.apache.camel.Producer;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.builder.xml.Namespaces;
 import org.apache.camel.converter.jaxb.JaxbDataFormat;
@@ -18,6 +25,10 @@ public class InputRouter extends RouteBuilder {
 	@Override
 	public void configure() throws Exception {
 
+		
+		
+		
+
 		final CommonUtils file = new CommonUtils();
 		final DataFormat jaxb = new JaxbDataFormat(
 				"edu.fhb.sysint.camel.model");
@@ -25,14 +36,14 @@ public class InputRouter extends RouteBuilder {
 		from(//rss:
 		"http://geofon.gfz-potsdam.de/db/eqinfo.php?fmt=rss&splitEntries=false")//.marshal().rss()
 		.log("retrieve")
-		.to("direct:start");
+		.to("direct:collectorChannel");
 
 		from(//rss:
 		"http://earthquake.usgs.gov/eqcenter/catalogs/eqs1day-M2.5.xml?fmt=rss&splitEntries=false")//.marshal().rss()
 		.log("retrieve")
-		.to("direct:start");
+		.to("direct:collectorChannel");
 		
-		from("direct:start")
+		from("direct:collectorChannel")
 		.choice()
 		.when().xpath("/rss/channel/item/pubDate")
 			.to("xslt:data/xsl/transformation2.xsl")

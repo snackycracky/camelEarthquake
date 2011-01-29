@@ -82,25 +82,59 @@
   
  \end{enumerate}
 
-\chapter{Information Collection and Normalization}
+\chapter{Information Collection and Normalization}\label{chapter:normalization}
+
+The Normalizer \cite{hohpe2003enterprise} (Pic. \ref{normalizerPic}) routes each
+message type through a custom Message Translator so that the resulting messages match a common format. 
+The different message formates are collected in one channel
+(``$direct:collectorChannel$'') and than routed according to their xml format.
+The Routing is accomlished with a xpath condition which routes the messages to
+the specified Message Translators \cite{hohpe2003enterprise} (Pic.
+\ref{translatorPic}). Here The Translator is implemented with a XSLT formatter
+\url{http://www.w3.org/TR/xslt}.
+The relative source code is listed in \ref{normalizerTranslator.java}
 
 
-\lstinputlisting[caption={Aggregator},
-label={code:countRoomsLatexsp},style=default]{code/inputstreams.java}
+  \begin{figure}[h!]
+	\begin{center}
+	\includegraphics[width=0.9\textwidth]{pics/NormalizerDetail.jpg}
+	\end{center}
+	\caption{Normalizer Pattern \cite{hohpe2003enterprise}}
+	\label{normalizerPic} 
+   \end{figure}
+   
+   
+   \begin{figure}[h!]
+	\begin{center}
+	\includegraphics[width=0.9\textwidth]{pics/MessageTranslator.jpg}
+	\end{center}
+	\caption{Translator Pattern \cite{hohpe2003enterprise}}
+	\label{translatorPic} 
+   \end{figure}
+
+
+
+\lstinputlisting[caption={Normalizer and Translator Source Code},
+label={normalizerTranslator.java},style=default]{code/normalizerTranslator.java}
+
+
 
 
 \chapter{Aggregating Information Sources} 
+
+
+
 \begin{quote}
-The Aggregator is a special filter that recieves a strem of messages an
+``The Aggregator is a special filter that recieves a strem of messages an
 didentifies messages that are correlated. Once a complete set of messages has
 been recied, the Aggregator collects information from each correlated message
 and publishes a single, aggregated message to the output channel for further
-processing. \cite{hohpe2003enterprise}
+processing.'' \cite{hohpe2003enterprise}
 \end{quote}
 
   \begin{figure}[h!]
 	\begin{center}
-	\includegraphics[width=0.6\textwidth]{pics/Aggregator.jpg}
+	\includegraphics[width=0.9\textwidth]{pics/Aggregator.jpg}
 	\end{center}
 	\caption{Aggregator Pattern \cite{hohpe2003enterprise}}
 	\label{utilityTree} 
@@ -108,16 +142,26 @@ processing. \cite{hohpe2003enterprise}
 
 
 Camel provides a method named $aggregate$ with two parameters, first the
-identifier of the messages to aggregate (the message header) and second the
+identifier (the message header which was defined before in chapter
+\ref{chapter:normalization}) of the messages to aggregate  and second the
 strategy (as a Object: $SpecialAggregationStrategy$ which implements\\
-$org.apache.camel.processor.aggregate.AggregationStrategy$).
- s
+$org.apache.camel.processor.aggregate.AggregationStrategy$). Code listing
+\ref{aggregateinputstreams.java} shows the implementation in this project for
+the normalized messages from Chapter \ref{chapter:normalization}. Code listing
+\ref{aggregationstrategy.java} shows the strategy which is fairly simple.
+
+\lstinputlisting[caption={Aggregator},
+label={aggregateinputstreams.java},style=default]{code/aggregateinputstreams.java}
+
+
+\lstinputlisting[caption={Aggregation Strategy},
+label={aggregationstrategy.java},style=default]{code/aggregationstrategy.java}
+
+
+\chapter{Enrich Data with related Information}
 
 
 
-
-\chapter{Normierung der Daten auf eine einheitliches Format}
-\chapter{Anreicherung der Daten mit zusaetzlichen Informationen}
 \chapter{Sortierung und speicherung der Daten}
 \chapter{Emailbenachrichtigung}
 \chapter{REST Schnittstelle zu den Daten}

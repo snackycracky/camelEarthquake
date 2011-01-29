@@ -32,17 +32,17 @@ public class Driver {
 	public static void main(String args[]) throws Exception {
 		CamelContext context = new DefaultCamelContext();
 
-		final CommonUtils file = new CommonUtils();
-		final DataFormat jaxb = new JaxbDataFormat(
-				"edu.fhb.sysint.camel.model");
-
+//		final CommonUtils file = new CommonUtils();
+//		final DataFormat jaxb = new JaxbDataFormat(
+//				"edu.fhb.sysint.camel.model");
+//
 //		context.addRoutes(new RouteBuilder() {
 //
 //			public void configure() {
 //
 //				Namespaces ns = new Namespaces("ns",
 //						"http://schemas.microsoft.com/dynamics/2006/02/documents/Message");
-
+//
 //				
 //				
 //				
@@ -79,13 +79,14 @@ public class Driver {
 //				from("direct:normalizedMsg")
 //					.aggregate(header("visited"), new XMLAggregationStrategy())
 //					.completionTimeout(500)
-//					.process(new DebugProcessor());
-//				
+//					.log("ok")
+//					.process(new EnrichmentProcessor())
+//					.to("file:/Users/nils/Desktop/result1.xml").delay(40000);
 //			}});
-				
-				
-				
-				
+//				
+//				
+//				
+//				
 				
 				
 				
@@ -278,7 +279,7 @@ public class Driver {
 //		});
 //
 		context.start();
-	Thread.sleep(10000);
+	Thread.sleep(100000);
 	}
 
 }

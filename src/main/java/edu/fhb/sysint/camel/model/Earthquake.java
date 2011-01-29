@@ -21,7 +21,7 @@ public class Earthquake {
 	private String location = "";
 
 	@XmlElement
-	private String weather = "";
+	private Weather weather;
 	@XmlElement
 	private String country = "";
 	
@@ -86,7 +86,7 @@ public class Earthquake {
 	/**
 	 * @return the weather
 	 */
-	public String getWeather() {
+	public Weather getWeather() {
 		return weather;
 	}
 
@@ -94,7 +94,7 @@ public class Earthquake {
 	 * @param weather
 	 *            the weather to set
 	 */
-	public void setWeather(String weather) {
+	public void setWeather(Weather weather) {
 		this.weather = weather;
 	}
 
