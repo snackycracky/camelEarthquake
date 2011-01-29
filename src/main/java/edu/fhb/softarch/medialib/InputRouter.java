@@ -1,7 +1,6 @@
 package edu.fhb.softarch.medialib;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
@@ -24,67 +23,45 @@ public class InputRouter extends RouteBuilder {
 		final DataFormat jaxb = new JaxbDataFormat(
 				"edu.fhb.softarch.medialib.model");
 
-		from(
-				"http://geofon.gfz-potsdam.de/db/eqinfo.php?fmt=rss&splitEntries=false")
-				// from("http://localhost/eqInfo.xml")
-				.setHeader("visited", constant(true))
-				.to("xslt:data/xsl/transformation.xsl").to("direct:start")
-				.delay(1000);
+		from(//rss:
+		"http://geofon.gfz-potsdam.de/db/eqinfo.php?fmt=rss&splitEntries=false")//.marshal().rss()
+		.to("direct:start");
 
-		from(
-				"http://earthquake.usgs.gov/eqcenter/catalogs/eqs1day-M2.5.xml?splitEntries=false")
-				// from("http://localhost/eqs1dat.xml")
-				.setHeader("visited", constant(true))
-				.to("xslt:data/xsl/transformation2.xsl").to("direct:start")
-				.delay(1000);
-
+		from(//rss:
+		"http://earthquake.usgs.gov/eqcenter/catalogs/eqs1day-M2.5.xml?fmt=rss&splitEntries=false")//.marshal().rss()
+		.to("direct:start");
+		
 		from("direct:start")
-				.aggregate(header("visited"), new MyAggregationStrategy())
-				// .enrich("direct:enrichUri", new
-				// MyEnrichAggregationStrategy())
-				.completionSize(2).completionTimeout(3000).delay(3000)
+		.choice()
+		.when().xpath("/rss/channel/item/pubDate")
+			.to("xslt:data/xsl/transformation2.xsl")
+			.setHeader("visited", constant(true))
+			.log("true")
+			.to("direct:normalizedMsg")
+		.otherwise()
+			.to("xslt:data/xsl/transformation.xsl")
+			.setHeader("visited", constant(true))
+			.log("false")
+			.to("direct:normalizedMsg");
+		
+		from("direct:normalizedMsg")
+				.aggregate(header("visited"), new XMLAggregationStrategy())
+				.completionSize(2).delay(3000)
 				.to("direct:filterBiggestEarthquakes")
 				.to("direct:UnmarshallMergedSources");
 
-		from("direct:UnmarshallMergedSources").unmarshal(jaxb)
-				.process(new Processor() {
-					public void process(Exchange exchange) throws Exception {
-						EarthquakeCollection ec = exchange.getIn().getBody(
-								EarthquakeCollection.class);
-						ArrayList<Earthquake> listClone = new ArrayList<Earthquake>();
-						int i = 1;
-						for (Earthquake e : ec.getEntries()) {
-							String additionalInfo = CommonUtils
-									.findAdditionalInfo(e.getLocation());
-
-							e.setCountry(additionalInfo.contains("not found") ? "undefined"
-									: additionalInfo);
-							e.setId(i++);
-
-							listClone.add(e);
-						}
-						ec.setEntries(listClone);
-						exchange.getIn()
-								.setBody(ec, EarthquakeCollection.class);
-					}
-				}).process(new Processor() {
-					public void process(Exchange exchange) throws Exception {
-
-						String body = exchange.getIn().getBody(String.class);
-						body = body.replaceAll("<\\?xml(.*)>", "");
-
-						file.writeToFile(
-								GlobalConstants.IntermediateResult_ENRICHMENT,
-								body, false);
-					}
-				}).marshal(jaxb)
+		from("direct:UnmarshallMergedSources")//
+				.unmarshal(jaxb)
+				.process(new EnrichmentProcessor())
+				.process(new RemoveXMLHeaderProcessor())
+				.marshal(jaxb)
 				// .to("file://"+GlobalConstants.IntermediateResult+"?append=false");
 				.to("file:/Users/nils/Desktop/result.xml").delay(3000);
 
 		from("direct:filterBiggestEarthquakes")
 				.split(xpath("/earthquakes/earthquake[size>5.4]"))
 				.setHeader("splitted", constant(true))
-				.aggregate(header("splitted"), new AnotherAggregationStrategy())
+				.aggregate(header("splitted"), new SimpleAggregationStrategy())
 				.completionInterval(2000)
 				.process(new Processor() {
 					public void process(Exchange exchange) throws Exception {

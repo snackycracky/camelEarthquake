@@ -49,6 +49,11 @@
 			<artifactId>camel-mail</artifactId>
 			<version>${camel-version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-rss</artifactId>
+			<version>${camel-version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.apache.activemq</groupId>
@@ -65,6 +70,7 @@
 			<artifactId>activemq-camel</artifactId>
 			<version>${activemq-version}</version>
 		</dependency>
+		
 
 	</dependencies>
 

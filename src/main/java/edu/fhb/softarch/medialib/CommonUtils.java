@@ -76,7 +76,7 @@ public class CommonUtils {
 		return result;
 	}
 
-	public boolean writeToFile(String filename, String daten, boolean append) {
+	public static boolean writeToFile(String filename, String daten, boolean append) {
 
 		File res;
 		FileWriter fw;

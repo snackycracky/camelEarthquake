@@ -27,22 +27,73 @@ import edu.fhb.softarch.medialib.model.EarthquakeCollection;
 import edu.fhb.softarch.medialib.model.EintragCollection;
 
 public class Driver {
-	private static final String HTTP_WWW_W3_ORG_2003_01_GEO_WGS84_POS = "http://www.w3.org/2003/01/geo/wgs84_pos";
+	
+
 
 	public static void main(String args[]) throws Exception {
-//		CamelContext context = new DefaultCamelContext();
-//
-//		final CommonUtils file = new CommonUtils();
-//		final DataFormat jaxb = new JaxbDataFormat(
-//				"edu.fhb.softarch.medialib.model");
-//
+		CamelContext context = new DefaultCamelContext();
+
+		final CommonUtils file = new CommonUtils();
+		final DataFormat jaxb = new JaxbDataFormat(
+				"edu.fhb.softarch.medialib.model");
+
 //		context.addRoutes(new RouteBuilder() {
 //
 //			public void configure() {
 //
 //				Namespaces ns = new Namespaces("ns",
 //						"http://schemas.microsoft.com/dynamics/2006/02/documents/Message");
+
+//				
+//				
+//				
+//				from(
+//				"rss:http://geofon.gfz-potsdam.de/db/eqinfo.php?fmt=rss&splitEntries=false").marshal().rss()
+//				// from("http://localhost/eqInfo.xml")
+////				.setHeader("visited", constant(true))
+////				.to("xslt:data/xsl/transformation.xsl")
+//				.to("direct:start");
+////				.delay(1000);
 //
+//				from(
+//				"rss:http://earthquake.usgs.gov/eqcenter/catalogs/eqs1day-M2.5.xml?fmt=rss&splitEntries=false").marshal().rss()
+//				// from("http://localhost/eqs1dat.xml")
+////				.setHeader("visited", constant(true))
+////				.to("xslt:data/xsl/transformation2.xsl")
+//				.to("direct:start");
+////				.delay(1000);
+//				
+//				from("direct:start")
+////				.process(new DebugProcessor())
+//				.choice()
+//				.when().xpath("/rss/channel/item/pubDate")
+//					.to("xslt:file:src/main/resources/data/xsl/transformation2.xsl")
+//					.setHeader("visited", constant(true))
+//					.log("true")
+//					.to("direct:normalizedMsg")
+//				.otherwise()
+//					.to("xslt:file:src/main/resources/data/xsl/transformation.xsl")
+//					.setHeader("visited", constant(true))
+//					.log("false")
+//					.to("direct:normalizedMsg");
+//				
+//				from("direct:normalizedMsg")
+//					.aggregate(header("visited"), new XMLAggregationStrategy())
+//					.completionTimeout(500)
+//					.process(new DebugProcessor());
+//				
+//			}});
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+//				
 //				from("file:/Users/nils/Desktop/driverInput?noop=true")
 //						.split(xpath("/earthquakes/earthquake[size>5.4]"))
 //						.setHeader("splitted", constant(true))
@@ -50,7 +101,7 @@ public class Driver {
 ////
 ////				from("direct:splitted")
 //						.aggregate(header("splitted"),
-//								new AnotherAggregationStrategy())
+//								new SimpleAggregationStrategy())
 //						.completionInterval(2000)
 //						
 //						.process(new Processor() {
@@ -227,12 +278,8 @@ public class Driver {
 //			}
 //		});
 //
-//		context.start();
-//		Thread.sleep(3500);
+		context.start();
+	Thread.sleep(10000);
 	}
 
-	protected static void syso(Object string) {
-		System.out.println(string);
-
-	}
 }

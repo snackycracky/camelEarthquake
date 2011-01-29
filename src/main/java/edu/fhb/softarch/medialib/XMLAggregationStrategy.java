@@ -3,7 +3,7 @@ package edu.fhb.softarch.medialib;
 import org.apache.camel.Exchange;
 import org.apache.camel.processor.aggregate.AggregationStrategy;
 
-public class MyAggregationStrategy implements AggregationStrategy {
+public class XMLAggregationStrategy implements AggregationStrategy {
 
 	public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
 		if (oldExchange == null) {
