@@ -50,7 +50,7 @@
 
 \chapter{Introduction / Motivation / Project}
  
-Systemintegration is the part of a software architecture. It helps to connect components or
+System integration is the part of a software architecture. It helps to connect components or
 subsystems together. Certain patterns are used in the industry today. Using and learning
 EIP (“Enterprise Integration Patterns”) with Apache Camel is the goal of this
 Project. \\
@@ -58,7 +58,7 @@ Project. \\
 The Example for this project is all about earthquake data from
 around the world. The Application is able to read earthquake data from various RSS Feeds and processes it. During
 the processing the data will be in form of XML and Java Objects. The data will be enriched,
-spitted, sorted, aggregated, normalized, marshaled unmarshalled and finally provided again
+spitted, sorted, aggregated, normalized, marshaled unmarshaled and finally provided again
 in form of a restful service.\\
  
  The specified task is as follows:
@@ -66,18 +66,18 @@ in form of a restful service.\\
  \begin{enumerate}
    
  
- \item Read Earthquake Data continously from those two RSS Streams
+ \item Read Earthquake Data continuously from those two RSS Streams
  \begin{itemize}
   	\item \url{http://geofon.gfz-potsdam.de/db/eqinfo.php?fmt=rss}
   	\item \url{http://earthquake.usgs.gov/eqcenter/catalogs/eqs1day-M2.5.xml}
   \end{itemize}
   \item enrich this data with other related information like the weather in this
   area at this time. Data can be from here: \url{http://www.programmableweb.com}.
-  \item sort the earthquakes by the earthparts where they appear
+  \item sort the earthquakes by the earth parts where they appear
   \item if the earthquake has a strength of more than ``M 5.5'' than send an
-  formated warning email to an email adress.
+  formatted warning email to an email address.
   \item  provide this data via a Restful interface in form of a list of the
-  earthparts with an xlink to detailed information of the earthquakes.
+  earth parts with an xlink to detailed information of the earthquakes.
   
  \end{enumerate}
 
@@ -85,9 +85,9 @@ in form of a restful service.\\
 
 The Normalizer \cite{hohpe2003enterprise} (Pic. \ref{normalizerPic}) routes each
 message type through a custom Message Translator so that the resulting messages match a common format. 
-The different message formates are collected in one channel
+The different message formats are collected in one channel
 (``$direct:collectorChannel$'') and than routed according to their xml format.
-The Routing is accomlished with a xpath condition which routes the messages to
+The Routing is accomplished with a xPath condition which routes the messages to
 the specified Message Translators \cite{hohpe2003enterprise} (Pic.
 \ref{translatorPic}). Here The Translator is implemented with a XSLT formatter
 \url{http://www.w3.org/TR/xslt}.
@@ -124,9 +124,9 @@ label={normalizerTranslator.java},style=default]{code/normalizerTranslator.java}
 
 
 \begin{quote}
-``The Aggregator is a special filter that recieves a strem of messages an
-didentifies messages that are correlated. Once a complete set of messages has
-been recied, the Aggregator collects information from each correlated message
+``The Aggregator is a special filter that receives a stream of messages an
+identifies messages that are correlated. Once a complete set of messages has
+been received, the Aggregator collects information from each correlated message
 and publishes a single, aggregated message to the output channel for further
 processing.'' \cite{hohpe2003enterprise}
 \end{quote}
@@ -147,7 +147,8 @@ strategy (as a Object: $SpecialAggregationStrategy$ which implements\\
 $org.apache.camel.processor.aggregate.AggregationStrategy$). Code listing
 \ref{aggregateinputstreams.java} shows the implementation in this project for
 the normalized messages from Chapter \ref{chapter:normalization}. Code listing
-\ref{aggregationstrategy.java} shows the strategy which is fairly simple.
+\ref{aggregationstrategy.java} shows the strategy which is fairly simple.
+
 
 \lstinputlisting[caption={Aggregator},
 label={aggregateinputstreams.java},style=default]{code/aggregateinputstreams.java}
@@ -192,26 +193,25 @@ label={conricherProcessor.java},style=default]{code/conricherProcessor.java}
 
 
 
-For the most flexibility the XML Message is automatically unmarshalled to the
-specified Java objects via the JAXB Umarshaller. 
+For the most flexibility the XML Message is automatically unmarshaled to the
+specified Java objects via the JAXB Unmarshaler. 
 
 \begin{itemize}
   \item Earthpart
   \item EarthPartCollection
   \item EarthquakeCollection
   \item Earthquake
-  \item EintragCollection
   \item Weather
   \item WeatherWrapper
 \end{itemize}
 
-This is easyliy accomplished with jaxb Annotations in the data models. For more
+This is easily accomplished with jaxb Annotations in the data models. For more
 information on JAXB please visit: \\
 \url{http://www.oracle.com/technetwork/articles/javase/index-140168.html}
 
 In Camel, data formats are pluggable transformers that can transform messages
 from one form to another and vice versa. Each data format is represented in
-Camel as an interface in org.apace.camel.spi.DataFormat containing two methods:
+Camel as an interface in org.apache.camel.spi.DataFormat containing two methods:
 \begin{itemize}
   \item marshal—For marshaling a message into another form, such as
 marshaling Java objects to XML, CSV, EDI, HL7, or other well-known data
@@ -221,7 +221,9 @@ formats back into a message.
 \end{itemize}
 You may already have realized that these two functions are
 opposites, meaning that one is capable of reversing what the other has done, as illustrated in
-figure \ref{picMarshalling}. \cite{ibsen2010camel}
+figure \ref{picMarshalling}. \cite{ibsen2010camel}
+
+
 
   \begin{figure}[h!]
 	\begin{center}
@@ -231,7 +233,7 @@ figure \ref{picMarshalling}. \cite{ibsen2010camel}
 	\label{picMarshalling} 
    \end{figure}
 
-The Marshalled State is shown in the Class Diagram (Pic \ref{modelDia.JPG}) for
+The Marshaled State is shown in the Class Diagram (Pic \ref{modelDia.JPG}) for
 the package\\ $edu.fhb.sysint.camel.model$\\
 The marshalled state is the XML Form (Pic. \ref{picmarshalledEarthparts},
 \ref{picmarshalledEarthquake.png})
@@ -267,7 +269,7 @@ The marshalled state is the XML Form (Pic. \ref{picmarshalledEarthparts},
 \chapter{Email Notification}
 
 If the strength of the Earthquakes are more than M 5.5 than an email
-notification must be delivered. This is implemented with Apache Camel throught
+notification must be delivered. This is implemented with Apache Camel through
 the splitter Pattern (Pic \ref{splitter}) 
 
 
@@ -280,8 +282,8 @@ the splitter Pattern (Pic \ref{splitter})
    \end{figure}
 
 
-The Source is splitted and aggregated. If The xPath evaluates to true the
-message is reformated in a human readable format and sent to the provided email
+The Source is spitted and aggregated. If The xPath evaluates to true the
+message is reformatted in a human readable format and sent to the provided email
 address.
 
 \lstinputlisting[caption={Splitting Pattern},
@@ -308,10 +310,10 @@ The Resulting Email is shown in Pic \ref{EmailResult}
 
 The Mashup is provided via a REST Web Service
 (\url{http://localhost:9000/earthquakeService/})
-The provided Data is sorted by Earthparts which were determined via the
+The provided Data is sorted by Earth parts which were determined via the
 enrichment Phase.
 Camel has the availability to establish a REST Service with the Help of the
-Apache CXF Project which works closly JAXB (marshalling/umarshalling). 
+Apache CXF Project which works closely JAXB (marshaling/unmarshaling). 
 The Rest Router (Listing \ref{rest.java} ) determines the requested URL and
 requests the DAO Layer \cite{fowler2002patterns} to send the correct response
 Data.
@@ -327,16 +329,16 @@ label={cxf.java},style=default]{code/cxf.java}
 
 \chapter{XLink with jaxb Adapters}
 Jaxb allows the use of the Adapter Pattern \ref{gamma1995design}. This allows to
-define special Marshalling for Objects.
-When the jaxb umarshaller gets to the Earthpart Object than the data field
-``Earthquakes'' is not umarshalled normally. 
+define special Marshaling for Objects.
+When the jaxb unmarshaler gets to the Earth part Object than the data field
+``Earthquakes'' is not umarshaled normally. 
 The Annotation @XmlJavaTypeAdapter (Listing \ref{earthpartCode.java}) Redirects that
 action to special marshalling/umarshalling methods. 
 
 \lstinputlisting[caption={Earthpart Class},
 label={earthpartCode.java},style=default]{code/earthpartCode.java}
 
-Since the Classes for marshalling this special requirement are located in an
+Since the Classes for marshaling this special requirement are located in an
 extra package $edu.fhb.sysint.camel.model.adapter$ it was possible to use the
 namespace mechanism at package level. 
 
@@ -353,7 +355,8 @@ the source code. This synthetic interface makes it possible to access
 package-level annotations at runtime.\cite{packageinfo}''
 
 
-
+
+
 \lstinputlisting[caption={package-info.java for the Adapter Package},
 label={package-info.java},style=default]{code/package-info.java}
 
