@@ -13,6 +13,7 @@ import org.apache.camel.Processor;
 import org.apache.camel.Producer;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.builder.xml.Namespaces;
+import org.apache.camel.component.file.FileComponent;
 import org.apache.camel.converter.jaxb.JaxbDataFormat;
 import org.apache.camel.spi.DataFormat;
 
@@ -52,9 +53,9 @@ public class InputRouter extends RouteBuilder {
 				.unmarshal(jaxb)
 				.process(new EnrichmentProcessor())
 				.process(new RemoveXMLHeaderProcessor())
-				.marshal(jaxb).delay(3000);
-//				.to("file:/Users/nils/Desktop/result.xml").delay(3000);
-
+				.marshal(jaxb).delay(3000)
+				.to("file:/Users/nils/Desktop/?filename="+GlobalConstants.ENRICHMENT_FILE).delay(3000);
+ 
 		from("direct:filterBiggestEarthquakes")
 				.split(xpath("/earthquakes/earthquake[size>5.4]"))
 				.setHeader("splitted", constant(true))

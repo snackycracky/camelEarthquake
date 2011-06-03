@@ -12,8 +12,8 @@ class RemoveXMLHeaderProcessor implements Processor {
 		String body = exchange.getIn().getBody(String.class);
 		body = body.replaceAll("<\\?xml(.*)>", "");
 
-		CommonUtils.writeToFile(
-				GlobalConstants.IntermediateResult_ENRICHMENT,
-				body, false);
+//		CommonUtils.writeToFile(
+//				GlobalConstants.IntermediateResult_ENRICHMENT,
+//				body, false);
 	}
 }

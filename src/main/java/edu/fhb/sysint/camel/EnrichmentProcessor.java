@@ -19,7 +19,7 @@ final class EnrichmentProcessor implements Processor {
 		int i = 1;
 		for (Earthquake e : ec.getEntries()) {
 			String additionalInfo = CommonUtils
-					.findAdditionalInfo(e.getLocation());
+					.findCountryFromGeoInfo(e.getLocation());
 
 			e.setCountry(additionalInfo.contains("not found") ? "undefined"
 					: additionalInfo);

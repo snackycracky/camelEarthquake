@@ -43,7 +43,7 @@ public class CommonUtils {
 		return JaxBUtil.umarshallWeather(url).getCurrent_condition();
 		
 	}
-	public static String findAdditionalInfo(String location) {
+	public static String findCountryFromGeoInfo(String location) {
 		URL url;
 
 		String result = null;
